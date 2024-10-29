@@ -6,18 +6,18 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:41 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/28 15:50:03 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:27:17 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	char	*p;
-	int		i;
+	size_t		i;
 
 	p = (char *)s;
 	i = 0;
-	while (p[i] != '\0' || i < (int) n)
+	while (p[i] != '\0' && i <  n )
 		if (p[i++] == c)
 			return (p + i - 1);
 	return (NULL);
@@ -26,6 +26,5 @@ void	*ft_memchr(const void *s, int c, size_t n)
 int main()
 {
 	char s[] = "hi hiver";
-	char *ptr = memchr(s, 'p', 5);
-	printf("%s\n", ptr);
+	printf("%s\n",ft_memchr(s, 'p', 5));
 }*/

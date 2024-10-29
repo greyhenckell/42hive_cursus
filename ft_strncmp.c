@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 17:19:38 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 17:46:38 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 17:48:21 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/29 18:00:13 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
-	char	*p;
-	size_t	len;
+	unsigned int	i;
+	char			*p1;
+	char			*p2;
 
-	p = (char *)s;
-	len = ft_strlen(s);
-	while (len > 0 && s[len] != c)
-		len--;
-	return (p + len);
+	p1 = (char *)s1;
+	p2 = (char *)s2;
+	i = 0;
+	while (i < n && p1[i] == p2[i])
+		i++;
+	return ((p1[i] > p2[i]) - (p2[i] > p1[i]));
 }
 /*
-#include <stdio.h>
-int  main()
+int main()
 {
-	char s[] = "welcome";
-	printf("%s\n", ft_strrchr(s, 'e'));
+    printf("%d\n", ft_strncmp("hola", "", 6));
+    printf("---------\n");
+    printf("%d\n", strncmp("hola", "", 6));
 }*/
