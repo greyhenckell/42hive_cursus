@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:51:36 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/28 16:34:43 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:32:27 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 		pdest[i] = psrc[i];
 		i++;
 	}
-	return (pdest);
+	return ((void *)pdest);
 }
 /*
 int main()

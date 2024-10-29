@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 12:54:48 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 16:10:25 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 17:05:47 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/29 17:23:32 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-size_t	ft_strlen(const char *s)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
+	char	*p;
+	int		i;
 
+	p = (char *)s;
 	i = 0;
-	while (s[i] != '\0')
+	if (c == '\0')
+		return ("\0");
+	while (s[i] != '\0' && s[i] != c)
 		i++;
-	return (i);
+	if (s[i])
+		return (p + i);
+	return (NULL);
 }
+/*
+int main()
+{
+    printf("%s\n", strchr("hola", 'l'));
+}*/

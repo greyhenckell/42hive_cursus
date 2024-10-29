@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 16:38:44 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 10:06:41 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:34:56 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 			i++;
 		}
 	}
-	return (pdest);
+	return ((void *)pdest);
 }
 /*
 int main()
