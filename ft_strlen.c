@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 14:54:48 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 12:47:22 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 12:54:48 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/29 12:58:40 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*ft_memset(void *s, int c, size_t n)
-{
-	char	*p;
-	int		i;
+#include <stdio.h>
 
-	p = (char *)s;
-	i = 0;
-	while (i < (int) n)
-	{
-		p[i++] = c;
-	}
-	p[i] = '\0';
-	return ((void *)p);
+size_t ft_strlen(const char *s)
+{
+    size_t i;
+
+    i = 0;
+    while (s[i] != '\0')
+        i++;
+    return (i);
 }
-/*
+
+
 int main()
 {
-	char src[10];
-	memset(src, 'a', 5);
-	printf("%s\n",src);
-
-}*/
+    printf("%zu\n", ft_strlen("hola"));
+}

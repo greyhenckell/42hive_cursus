@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 14:54:48 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 12:47:22 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 10:16:24 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/29 10:19:54 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*ft_memset(void *s, int c, size_t n)
+int	ft_isalpha(int c)
 {
-	char	*p;
-	int		i;
-
-	p = (char *)s;
-	i = 0;
-	while (i < (int) n)
-	{
-		p[i++] = c;
-	}
-	p[i] = '\0';
-	return ((void *)p);
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	return (0);
 }
 /*
 int main()
 {
-	char src[10];
-	memset(src, 'a', 5);
-	printf("%s\n",src);
-
-}*/
+    char s[] = "h123ola";
+    int i = 0;
+    int d;
+    while (s[i] != '\0')
+    {
+        d = s[i];
+        printf("%d\n", d);
+        printf("%c-> %d\n", s[i], ft_isalpha(d));
+        i++;
+    }
+}
+*/

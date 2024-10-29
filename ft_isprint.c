@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 14:54:48 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 12:47:22 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 12:49:04 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/29 12:50:38 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*ft_memset(void *s, int c, size_t n)
+int	ft_isprint(int c)
 {
-	char	*p;
-	int		i;
-
-	p = (char *)s;
-	i = 0;
-	while (i < (int) n)
-	{
-		p[i++] = c;
-	}
-	p[i] = '\0';
-	return ((void *)p);
+	if (c >= 32 && c <= 126)
+		return (1);
+	return (0);
 }
-/*
-int main()
-{
-	char src[10];
-	memset(src, 'a', 5);
-	printf("%s\n",src);
-
-}*/

@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 14:54:48 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 12:47:22 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 10:38:08 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/29 11:25:20 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*ft_memset(void *s, int c, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*p;
+	char	*ps1;
+	char	*ps2;
 	int		i;
 
-	p = (char *)s;
+	ps1 = (char *)s1;
+	ps2 = (char *)s2;
 	i = 0;
-	while (i < (int) n)
-	{
-		p[i++] = c;
-	}
-	p[i] = '\0';
-	return ((void *)p);
+	while ((i < (int)n) && (ps1[i] == ps2[i]))
+		i++;
+	if (ps1[i] - ps2[i] == 0)
+		return (0);
+	return (ps1[i] - ps2[i]);
 }
 /*
 int main()
 {
-	char src[10];
-	memset(src, 'a', 5);
-	printf("%s\n",src);
-
+	char e1[50] = "welcome to hive";
+	char e2[50] = "welcome To hive";
+	printf("%d\n", ft_memcmp(e1,e2,30));
+	printf("%d\n", memcmp(e1,e2,30));
 }*/
