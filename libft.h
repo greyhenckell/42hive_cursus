@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 17:19:13 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:34:48 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ size_t  ft_strlcpy(char *dst, const char *src, size_t size);
 int     ft_toupper(int c);
 int     ft_tolower(int c);
 char    *ft_strchr(const char *s, int c);
+char    *ft_strrchr(const char *s, int c);
+int     ft_strncmp(const char *s1, const char *s2, unsigned int n);
+void    *ft_memchr(const void *s, int c, size_t n);
 
 
 #endif
