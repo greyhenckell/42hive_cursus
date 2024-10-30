@@ -10,45 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
-#include <stdio.h>
-#include <bsd/string.h>
+//#include <stdio.h>
+//#include <bsd/string.h>
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
-	int	k;
 	char	*pbig;
 	char	*plit;
 
 	pbig = (char *)big;
         plit = (char *)little;
 
+	if (!(*pbig) || !len)
+		return (NULL);
 	if (!(*plit))
-		return pbig;
+		return (pbig);
 	i = 0;
-	k = 0;
-	while(pbig[i] != '\0' && i < len )
+	while (pbig[i] != '\0' && i < len)
 	{
-		if(pbig[i] == plit[k])
-		{
-			printf("i:%zu\n", i);
-			printf("%s\n", pbig+i);
-			k = ft_strncmp(pbig+i, plit, ft_strlen(plit));
-			printf("myk: %d\n",k);
-		}
-		else
-			i++;
+		if (pbig[i] == plit[0] )
+			if(!(ft_strncmp(pbig+i, plit, ft_strlen(plit)-1)))
+				return pbig+i;		
+		i++;
 	}
-	//printf("1stoccurrence: %s\n", pbig+i);
-	return NULL;
+	return (NULL);
 }
-
+/*
 int main()
 {
-	const char *big = "FooBa Bar Baz";;
-	const char *small = "Bar";
-	//printf("%zu\n",ft_strlen(small));
-	//printf("%d\n",ft_strncmp(big,"Bar",3));
-	printf("%s\n",ft_strnstr(big, small, 40 ));
-	printf("%s\n",strnstr(big, small, 40 ));
-}
+	const char *big = "dfgdfgf";
+	const char *small = "fg";
+	printf("%s\n",ft_strnstr(big, small, 10 ));
+	printf("%s\n",strnstr(big, small, 10 ));
+}*/
