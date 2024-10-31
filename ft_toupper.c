@@ -6,14 +6,13 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:00:53 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 17:01:49 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/31 13:57:19 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_toupper(int c)
 {
-	int	out;
-
-	out = c - 32;
-	return (out);
+	if (c >=97 && c<= 122)
+		c -= 32;
+	return (c);
 }
