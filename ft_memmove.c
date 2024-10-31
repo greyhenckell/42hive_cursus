@@ -15,12 +15,15 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char	*pdest;
-	char	*psrc;
-	int		i;
+	unsigned char	*pdest;
+	unsigned char	*psrc;
+	size_t		i;
 
-	pdest = (char *) dest;
-	psrc = (char *)src;
+	if (dest == NULL && src == NULL && n > 0)
+		return NULL;
+
+	pdest = (char unsigned *) dest;
+	psrc = (char unsigned *)src;
 	if (pdest > psrc)
 	{
 		while (n > 0)
@@ -32,21 +35,21 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	else
 	{
 		i = 0;
-		while (i < (int)n)
+		while (i < n)
 		{
 			pdest[i] = psrc[i];
 			i++;
 		}
 	}
-	return ((void *)pdest);
+	return (dest);
 }
 /*
 int main()
 {
 	//char dest_str[] = "Tutorialspoint"; 
-	char src_str[] = "fgdgf";
+	char src_str[40] = "fgdgf";
 	printf("size:%lu\ndest_src_5:%s\n",sizeof(src_str), src_str+5);
 	//ft_memmove(src_str+5, src_str, strlen(src_str)+1);
-	memmove(NULL, src_str, 10);
+	memmove(0, src_str, sizeof(10));
 	printf("%s\n", src_str);
 }*/
