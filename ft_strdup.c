@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 14:54:48 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/31 10:02:51 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/31 11:23:12 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/31 11:39:19 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+char	*ft_strdup(char *src)
 {
-	char	*p;
-	int		i;
+	char	*str_p;
 
-	p = (char *)s;
-	i = 0;
-	while (i < (int) n)
-	{
-		p[i++] = c;
-	}
-	p[i] = '\0';
-	return (p);
+	str_p = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (str_p == NULL)
+		return (NULL);
+	ft_strlcpy(str_p, src, ft_strlen(src)+1);
+	return (str_p);
 }
 /*
-int main()
+int	main(void)
 {
-	char src[10];
-	memset(src, 'a', 5);
-	printf("%s\n",src);
-
+    char source[] = "hola";
+    char *copy = ft_strdup(source);
+    printf("%s\n",copy);
+    return (0);
 }*/

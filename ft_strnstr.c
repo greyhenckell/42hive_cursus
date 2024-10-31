@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:42:08 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/30 18:16:13 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:42:27 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -20,8 +20,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	char	*plit;
 
 	pbig = (char *)big;
-        plit = (char *)little;
-
+	plit = (char *)little;
 	if (!(*pbig) || !len)
 		return (NULL);
 	if (!(*plit))
@@ -29,9 +28,9 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	i = 0;
 	while (pbig[i] != '\0' && i < len)
 	{
-		if (pbig[i] == plit[0] )
-			if(!(ft_strncmp(pbig+i, plit, ft_strlen(plit)-1)))
-				return pbig+i;		
+		if (pbig[i] == plit[0])
+			if (!(ft_strncmp(pbig + i, plit, ft_strlen(plit) - 1)))
+				return (pbig + i);
 		i++;
 	}
 	return (NULL);

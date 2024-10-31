@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:45:24 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/31 11:33:41 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/31 10:32:04 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/31 11:41:48 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
+//#include <bsd/string.h>
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t	i;
-	size_t	len;
+	int	append_limit;
+	int	i;
+	int	dst_size;
 
-	len = ft_strlen(src);
 	i = 0;
-	if (size == 0)
-		return (len);
-	while (i < size - 1)
+	dst_size = ft_strlen(dst);
+	append_limit = size - dst_size - 1;
+	dst = dst + dst_size;
+	while (i < append_limit)
 	{
 		dst[i] = src[i];
 		i++;
 	}
 	dst[i] = '\0';
-	return (len);
+	return (dst_size + strlen(src));
 }
 /*
 int main()
 {
-    char input[] = "hola_es";
-    char buf[20]="zz";
-    int r = ft_strlcpy(buf, input, 0);
-    printf("%s\n", buf);
-    printf("%d\n", r);
+	char source[] = "_welcome";
+	char dest[] = "hola";
+	size_t r = strlcat(dest, source, strlen(source)+1);
+	printf("%s\n", dest);
+	printf("%zu\n", r);
 }*/
