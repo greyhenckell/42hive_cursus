@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/31 12:38:21 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:37:44 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 
-typedef typeof(sizeof(0))	size_t;
+//typedef typeof(sizeof(0))	size_t;
 
 int	ft_isalpha(int c);
 int	ft_isdigit(int c);

@@ -6,7 +6,7 @@
 #    By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/31 12:44:14 by fhenckel          #+#    #+#              #
-#    Updated: 2024/10/31 13:06:21 by fhenckel         ###   ########.fr        #
+#    Updated: 2024/10/31 13:41:55 by fhenckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,11 @@ obj/%.o: $(SRC_DIR)/%.c | obj
 obj:
 	@mkdir -p obj
 	@echo "obj dir created"
+#
+#TO BE DELETE BEFORE SUBMIT
+#
+so:
+	$(CC) -nostartfiles -shared -o libft.so $(OBJS)
 
 clean:
 	@rm -rf obj lib$(LIB_NAME).a
