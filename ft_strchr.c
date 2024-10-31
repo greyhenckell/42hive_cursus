@@ -6,9 +6,11 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:05:47 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 17:23:32 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/31 13:04:38 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {

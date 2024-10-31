@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:32:04 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/31 11:41:48 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/31 13:05:22 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -28,7 +28,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		i++;
 	}
 	dst[i] = '\0';
-	return (dst_size + strlen(src));
+	return (dst_size + ft_strlen(src));
 }
 /*
 int main()

@@ -6,9 +6,11 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:51:36 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 14:32:27 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:57:18 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
