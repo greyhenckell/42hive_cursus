@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:38:08 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/01 16:19:17 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:43:39 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	unsigned char	*ps1;
 	unsigned char	*ps2;
 	size_t	i;
-	int diff;
 
 	if (n == 0)
 		return (0);

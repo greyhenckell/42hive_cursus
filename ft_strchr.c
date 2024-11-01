@@ -6,29 +6,32 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:05:47 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/31 13:04:38 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:59:27 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+//#include <string.h>
+//#include <stdio.h>
 
 char	*ft_strchr(const char *s, int c)
 {
 	char	*p;
-	int		i;
+	size_t		i;
 
 	p = (char *)s;
+	if (c == 0)
+                return (p+ft_strlen(s));
 	i = 0;
-	if (c == '\0')
-		return ("\0");
-	while (s[i] != '\0' && s[i] != c)
+	while (s[i] != c && s[i] != '\0')
 		i++;
-	if (s[i])
-		return (p + i);
-	return (NULL);
+	if (s[i] == 0)
+		return (NULL);
+	return (p + i);
 }
 /*
 int main()
 {
-    printf("%s\n", strchr("hola", 'l'));
+	printf("mmyv:%s\n", ft_strchr("hola sfgsgsereh", 50));
+	printf("orig:%s\n", strchr("hola sfgsgsereh", 50));
 }*/
