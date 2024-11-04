@@ -15,7 +15,8 @@
 
 # include <stdlib.h>
 
-//typedef typeof(sizeof(0))	size_t;
+const long INT_MAX = 2147483647;
+const long INT_MIN = -2147483648;
 
 int	ft_isalpha(int c);
 int	ft_isdigit(int c);

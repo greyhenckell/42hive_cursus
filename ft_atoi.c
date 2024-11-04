@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 //#include <stdio.h>
 //#include <stdlib.h>
 int	ft_atoi(const char *nptr)
@@ -33,7 +34,9 @@ int	ft_atoi(const char *nptr)
 	}
 	while (p[i] >= '0' && p[i] <= '9')
 	{
-		out = (p[i] - '0') + (out * 10);
+		if (out > (INT_MAX-(p[i]-48))/10 )
+			return (sign == 1?  INT_MAX: INT_MIN);
+		out = (out * 10) + p[i]-48;
 		i++;
 	}
 	return ((int)(out * sign));
@@ -42,6 +45,6 @@ int	ft_atoi(const char *nptr)
 int main()
 {
 
-    printf("%d\n", ft_atoi("2147483649"));
-    printf("%d\n", atoi("2147483649"));
+    printf("%d\n", ft_atoi("4000000000"));
+    printf("%d\n", atoi("4000000000"));
 }*/
