@@ -18,18 +18,17 @@ void	*ft_memset(void *s, int c, size_t n)
 {
 	unsigned char	*p;
 	size_t		i;
+	unsigned char	uc;
 
 	if (n == 0)
 		return (s);
 	
 	p = (unsigned char *)s;
 	i = 0;
+	uc = (unsigned char)c;
 	while (i < n)
-	{
-		//printf("%zu\n", i);
-		p[i++] = (unsigned char)c;
-	}
-	return ((void *)p);
+		p[i++] = uc;
+	return (s);
 }
 /*
 int main()
