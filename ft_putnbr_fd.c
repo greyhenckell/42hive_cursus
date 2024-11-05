@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 11:56:32 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/05 11:56:42 by fhenckel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
-#include <stdio.h>
+//#include <stdio.h>
 void ft_putnbr_fd(int n, int fd)
 {
     long m;
@@ -32,8 +44,8 @@ void ft_putnbr_fd(int n, int fd)
         write(fd, &out, 1);
     }
 }
-
+/*
 int main()
 {
     ft_putnbr_fd(-43179778, 1);
-}
+}*/

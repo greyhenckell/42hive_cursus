@@ -1,88 +1,58 @@
-//#include <stdio.h>
-//#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 18:01:50 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/05 18:59:07 by fhenckel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <stdio.h>
 #include "libft.h"
-
-int ft_checker(char *c, char *set)
-{
-    int i = 0;
-    while (set[i] != '\0')
-    {
-        if (c[i] == set[i])
-        {
-            i++;
-        }
-        else
-            return 0;
-    }
-    return i;
-}
-
-size_t ft_checker_r(char *c, char *set, int len)
-{
-
-    size_t i = ft_strlen(set);
-    size_t counter = 0;
-
-    while (i > 0)
-    {
-        len--;
-        i--;
-        if (c[len] == set[i])
-            counter++;
-        else
-            return 0;
-    }
-    return counter;
-}
 
 char *ft_strtrim(char const *s1, char const *set)
 {
     char *p1 = (char *)s1;
-    char *pset = (char *)set;
     char *out;
 
-    int c = 0;
     int i = 0;
-    int y = 0;
 
-    size_t lenstr = ft_strlen(p1);
-
+    size_t lenstr = ft_strlen(s1);
+    //printf("%zu\n",lenstr);
     out = (char *)malloc((lenstr + 1) * sizeof(char));
     if (out == NULL)
         return NULL;
-
     while (p1[i] != '\0')
     {
-        c = ft_checker(p1 + i, pset);
-        if (c > 0)
-            i = c + i;
+	if(ft_strchr(set, p1[i]))
+		i++;
         else
             break;
     }
-    // update pointer, len string,
     p1 = p1 + i;
-    lenstr = ft_strlen(p1);
-    y = lenstr;
-    i = 0;
-
-    // use recursive function
-    size_t r = ft_checker_r(p1, pset, lenstr);
-    if (r == ft_strlen(pset))
+    //printf("p1_val:%s\n", p1);
+    //printf("begintrimmed:%zu\n",lenstr-i);
+    while( lenstr-i > 0)
     {
-        lenstr = lenstr - r;
-        r += ft_checker_r(p1, pset, lenstr);
+	    if(ft_strchr(set, p1[lenstr-i-1]))
+	    	lenstr--;
+	    else
+	    	break;
     }
-    y = y - r;
-    while (i < y)
-    {
-        out[i] = p1[i];
-        i++;
-    }
+    //printf("endtrimmed:%zu\n", lenstr-i);
+    ft_strlcpy(out, p1, lenstr-i+1);
     out[i] = '\0';
     return out;
 }
-/*
+
 int main()
 {
-    printf("%s\n", strtrim("++----hola--++--", "++--")); //hola
-}*/
+	char *s1 = "   \t  \n\n \t\t  \n\n\nHello \t  Please\n Trim me !\n   \n \n \t\t\n  ";
+        char *s2 = "Hello \t  Please\n Trim me !";
+        char *ret = ft_strtrim(s1, " \n\t");
+	printf("%s\n",ret);
+	printf("-----------\n");
+	printf("%s\n",s2);
+}

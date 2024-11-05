@@ -6,7 +6,7 @@
 #    By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/31 12:44:14 by fhenckel          #+#    #+#              #
-#    Updated: 2024/10/31 13:41:55 by fhenckel         ###   ########.fr        #
+#    Updated: 2024/11/05 17:22:01 by fhenckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ ARFLAGS = rcs
 SRC_DIR = .
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 
-INCLUDES = -Iincludes
+INCLUDES = -I.
 
 #OBJS = $(SRCS:.c=.o)
 # Generate corresponding .o object files for each .c file
