@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/31 15:37:44 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:24:09 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define LIBFT_H
 
 # include <stdlib.h>
-
-const long INT_MAX = 2147483647;
-const long INT_MIN = -2147483648;
+# include <limits.h>
+# include <stdint.h>
 
 int	ft_isalpha(int c);
 int	ft_isdigit(int c);
@@ -41,5 +40,6 @@ void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 #endif

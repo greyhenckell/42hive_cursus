@@ -1,80 +1,40 @@
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 16:22:43 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/05 17:37:15 by fhenckel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 //#include <stdio.h>
 
-char	*ft_strcat(char *dest, char *src)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	i;
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*ptr;
 
-	i = 0;
-	while (dest[i] != '\0')
-	{
-		i++;
-	}
-	while (*src)
-	{
-		*(dest + i++) = *src++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int	counter(char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-int	len_strs(int size, char **strs)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (i < size)
-	{
-		len += counter(strs[i]);
-		i++;
-	}
-	return (len);
-}	
-
-char	*ft_strjoin(int size, char **strs, char *sep)
-{
-	char	*dest;
-	int		i;
-	int		total_len;
-
-	i = 0;
-	total_len = len_strs(size, strs) + (size - 1) * counter(sep) + 1;
-	if (total_len <= 0)
-		total_len = 1;
-	dest = (char *) malloc(total_len * sizeof(char));
-	if (dest == NULL)
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	ptr = (char *)malloc((s1_len + s2_len + 1) * sizeof(char));
+	if (ptr == NULL)
 		return (NULL);
-	dest[0] = '\0';
-	i = 0 ;
-	while (i < size)
-	{
-		ft_strcat(dest, strs[i]);
-		if (i < size - 1)
-			ft_strcat(dest, sep);
-		i++;
-	}
-	return (dest);
+	ft_strlcpy(ptr, s1, ft_strlen(s1)+1);
+	ft_strlcpy(ptr + s1_len, s2, ft_strlen(s2)+1);
+	return ((char *)ptr);
 }
 /*
 int main()
 {
-	char *out[] = {"", "como", "estas"};
-	char *res = ft_strjoin(0, out, "");
-
-	printf("%s", res);
+	char *src1 = "hello";
+	char *src2 = "_welcome";
+	printf("%zu + %zu\n",ft_strlen(src1), ft_strlen(src2));
+	char *res = ft_strjoin(src1, src2);
+	printf("%s\n",res);
 	free(res);
 }*/

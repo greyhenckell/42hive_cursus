@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 09:36:36 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/05 16:18:57 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:38:17 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	unsigned int	nmemsize;
-	int				*p;
+	size_t	nmemsize;
+	int		*p;
 
-	if (nmemb != 0 && size > (UINT_MAX / nmemb))
+	nmemsize = nmemb * size;
+	if (nmemb != 0 && size != (nmemsize / nmemb))
 		return (NULL);
-	if (!nmemb || !size)
-		nmemsize = 1;
-	else
-		nmemsize = nmemb * size;
 	p = malloc(nmemsize);
 	if (p == NULL)
 		return (NULL);
