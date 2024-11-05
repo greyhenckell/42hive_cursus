@@ -1,20 +1,20 @@
 //#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
 char *ft_substr(char const *s, unsigned int start, size_t len)
 {
     char *out;
-    char *temp;
     size_t i;
 
+    if(start >= ft_strlen(s))
+	len = 0;
     i = 0;
     out = (char *)malloc((len + 1) * sizeof(char));
     if (out == NULL)
 	    return NULL;
-    temp = (char *)s;
     while (i < len)
     {
-        out[i] = *(temp + start + i);
+        out[i] = *(s + start + i);
         i++;
     }
     out[i] = '\0';
@@ -23,6 +23,8 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 /*
 int main()
 {
-    // ft_substr("holaCOMOhola", 4, 4);
-    printf("%s\n", ft_substr("holaCOMOhola", 4, 4));
+	char *str = "1234";
+	char *ret = ft_substr(str, 10, 10);
+	printf("%s\n",ret);
+	free(ret);
 }*/
