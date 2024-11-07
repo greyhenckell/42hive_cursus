@@ -35,7 +35,6 @@ char	*ft_itoa(int n)
 	if (out == NULL)
 			return (NULL);
 	ft_putnbr(n, out);
-	while()
 		
 	return out;	
 }
