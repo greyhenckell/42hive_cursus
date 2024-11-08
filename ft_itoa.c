@@ -6,7 +6,7 @@
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:48:09 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/07 16:21:31 by fhenckel         ###   ########.fr       */
+/*   Updated: 2024/11/08 09:30:00 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,23 @@
 
 static int	integer_length(int n)
 {
-	int len;
+	int	len;
+
 	len = 0;
 	if (n == INT_MIN)
 		return (11);
 	if (!n)
 		return (1);
-	if (n<0)
+	if (n < 0)
 	{
 		len++;
 		n *= -1;
 	}
 	while (n > 0)
-        {
+	{
 		len++;
-                n = n / 10;
-        }
+		n = n / 10;
+	}
 	return (len);
 }
 
@@ -63,36 +64,42 @@ static	void	ft_putnbr(int n, char *out)
 	out[idx++] = '\0';
 }
 
-char	*ft_itoa(int n)
+static void	reverse_string(char *out)
 {
-	char	*out;
-	size_t	end;
-	size_t	start;
-	char 	temp;
-	int	size;
+	unsigned int	start;
+	unsigned int	end;
+	char			temp;
 
-	size = integer_length(n);
-	out = (char *)malloc(size+1 * sizeof(char));
-	if (out == NULL)
-		return (NULL);
-	ft_memset(out,0,size);
-	if (n*-1 == 0)
-	{
-		out[0] = '0';
-		out[1] = '\0';
-		return out;
-	}
-	ft_putnbr(n, out);
 	start = 0;
 	end = ft_strlen(out)-1;
 	while (start < end)
 	{
 		temp = out[start];
-		out[start] = out[end]; 
+		out[start] = out[end];
 		out[end] = temp;
 		start++;
 		end--;
 	}
+}
+
+char	*ft_itoa(int n)
+{
+	char	*out;
+	int		size;
+
+	size = integer_length(n);
+	out = (char *)malloc((size + 1) * sizeof(char));
+	if (out == NULL)
+		return (NULL);
+	ft_memset(out, 0, size);
+	if (n * (-1) == 0)
+	{
+		out[0] = '0';
+		out[1] = '\0';
+		return (out);
+	}
+	ft_putnbr(n, out);
+	reverse_string(out);
 	return (out);
 }
 /*
