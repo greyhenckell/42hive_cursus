@@ -37,19 +37,16 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	dst[i] = '\0';
 	return (dst_size + src_size);
 }
-/*
-int main()
+
+/*int	main(void)
 {
-	char source[] = "ABC";
-	char dest[] = "";
-	printf("src_len:%lu, dst_len:%lu\n", strlen(source), strlen(dest));
-	size_t r = ft_strlcat(dest, source, 0);
-	printf("%s\n", dest);
-	printf("%zu\n", r);
-	printf("--------------\n");
-	char source2[] = "ABC";
-        char dest2[] = "";
-        size_t r2 = strlcat((void*)0, source2, 0);
-        printf("%s\n", dest2);
-        printf("%zu\n", r2);
+	char	*dest;
+
+	if (!(dest = (char *)malloc(sizeof(*dest) * 15)))
+		return (0);
+	memset(dest, 0, 15);
+	memset(dest, 'r', 6);
+	dest[11] = 'a';
+	ft_strlcat(dest, "lorem", 15);
+	printf("\n%s", dest);
 }*/
