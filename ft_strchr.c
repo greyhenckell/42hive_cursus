@@ -11,17 +11,18 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+
 //#include <string.h>
 //#include <stdio.h>
 
 char	*ft_strchr(const char *s, int c)
 {
 	char	*p;
-	size_t		i;
+	size_t	i;
 
 	p = (char *)s;
 	if (c == 0)
-                return (p+ft_strlen(s));
+		return (p + ft_strlen(s));
 	i = 0;
 	while (s[i] != c && s[i] != '\0')
 		i++;
@@ -30,7 +31,7 @@ char	*ft_strchr(const char *s, int c)
 	return (p + i);
 }
 /*
-int main()
+int	main(void)
 {
 	printf("mmyv:%s\n", ft_strchr("hola sfgsgsereh", 50));
 	printf("orig:%s\n", strchr("hola sfgsgsereh", 50));

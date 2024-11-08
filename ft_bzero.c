@@ -22,7 +22,7 @@ void	ft_bzero(void *s, size_t n)
 		p[i++] = 0;
 }
 /*
-int main()
+int	main(void)
 {
 	char s[] = "hola";
 	bzero(s, 2);

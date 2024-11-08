@@ -11,18 +11,18 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+
 //#include <string.h>
 //#include <stdio.h>
 
 void	*ft_memset(void *s, int c, size_t n)
 {
 	unsigned char	*p;
-	size_t		i;
+	size_t			i;
 	unsigned char	uc;
 
 	if (n == 0)
 		return (s);
-	
 	p = (unsigned char *)s;
 	i = 0;
 	uc = (unsigned char)c;
@@ -31,7 +31,7 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 /*
-int main()
+int	main(void)
 {
 	char src[] = "welcome well";
 	char src2[] = "welcome well";

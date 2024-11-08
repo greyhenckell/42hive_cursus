@@ -29,24 +29,24 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (p);
 }
 /*
-int main()
+int	main(void)
 {
-    char s[] = "hola welcome";
-    char *ptr;
+	char s[] = "hola welcome";
+	char *ptr;
 
-    ptr = s;
+	ptr = s;
 
-    printf("%s\n", ptr);
-    ptr = (char *)calloc(50000000000000, 10);
-    if (ptr == NULL)
+	printf("%s\n", ptr);
+	ptr = (char *)calloc(50000000000000, 10);
+	if (ptr == NULL)
 	printf("calloc not allocated\n");
-    else
-    	printf("ptr created\n");
-    int i = 0;
-    while (i < 20)
-    {
-        printf(":%c\n", ptr[i]);
-        i++;
-    }
-    free(ptr);
+	else
+		printf("ptr created\n");
+	int i = 0;
+	while (i < 20)
+	{
+		printf(":%c\n", ptr[i]);
+		i++;
+	}
+	free(ptr);
 }*/

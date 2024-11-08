@@ -20,10 +20,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 	if (dest == NULL && src == NULL && n > 0)
 		return (NULL);
-
-	psrc = (char *) src;
-	pdest = (char *) dest;
-	i = 0 ;
+	psrc = (char *)src;
+	pdest = (char *)dest;
+	i = 0;
 	while (i < (int)n)
 	{
 		pdest[i] = psrc[i];
@@ -32,7 +31,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 /*
-int main()
+int	main(void)
 {
 	char d[10];
 	char s[] = "hi hiver!";
