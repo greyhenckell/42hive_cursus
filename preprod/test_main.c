@@ -1,18 +1,25 @@
 #include "libft.h"
+#include <stdio.h>
+#include <fcntl.h>
+#include <string.h>
+#include <bsd/string.h>
+// cc main.c -I. -L. -lft -o outmain
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	if (argc == 2)
+	if (argc > 1)
 	{
-		if (argv[2] == 'atoi')
+
+		if (ft_strncmp(argv[1], "atoi", ft_strlen(argv[1])) == 0)
 		{
+
 			printf("%d\n", ft_atoi("-4000000000"));
 			printf("%d\n", atoi("-4000000000"));
 			printf("%ld\n", strtol("-4000000000", 0, 10));
 			printf("%d\n", (int)strtol("-4000000000", 0, 10));
 		}
 
-		if (argv[2] == 'calloc')
+		if (ft_strncmp(argv[1], "calloc", ft_strlen(argv[1])) == 0)
 		{
 			char s[] = "hola welcome";
 			char *ptr;
@@ -20,7 +27,7 @@ int	main(int argc, char **argv)
 			ptr = s;
 
 			printf("%s\n", ptr);
-			ptr = (char *)calloc(50000000000000, 10);
+			ptr = (char *)ft_calloc(50000000000000, 10);
 			if (ptr == NULL)
 				printf("calloc not allocated\n");
 			else
@@ -34,14 +41,14 @@ int	main(int argc, char **argv)
 			free(ptr);
 		}
 
-		if (argv[2] == 'itao')
+		if (ft_strncmp(argv[1], "itoa", ft_strlen(argv[1])) == 0)
 		{
 			char *s = ft_itoa(0);
 			printf("%s\n", s);
 			free(s);
 		}
 
-		if (argv[2] == 'lstadd_front')
+		if (ft_strncmp(argv[1], "lstadd_front", ft_strlen(argv[1])) == 0)
 		{
 			t_list *h;
 			t_list **lst;
@@ -57,20 +64,19 @@ int	main(int argc, char **argv)
 				h = h->next;
 			}
 		}
-		if (argv[2] == 'memove')
+		if (ft_strncmp(argv[1], "memmove", ft_strlen(argv[1])) == 0)
 		{
 			// char dest_str[] = "Tutorialspoint";
 			char src_str[40] = "fgdgf";
 			printf("size:%lu\ndest_src_5:%s\n", sizeof(src_str), src_str + 5);
 			// ft_memmove(src_str+5, src_str, strlen(src_str)+1);
-			memmove(0, src_str, sizeof(10));
+			ft_memmove(0, src_str, sizeof(10));
 			printf("%s\n", src_str);
 		}
-		if (argv[2] == 'putendl_fd')
+		if (ft_strncmp(argv[1], "putendl_fd", ft_strlen(argv[1])) == 0)
 		{
 			ft_putendl_fd("Hello, world!", 1);
 
-			// Example: Writing to a file
 			int fd = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd == -1)
 				return (1);
@@ -80,14 +86,13 @@ int	main(int argc, char **argv)
 			close(fd);
 			return (0);
 		}
-		if (argv[2] == 'split')
+		if (ft_strncmp(argv[1], "split", ft_strlen(argv[1])) == 0)
 		{
 			char **result;
 			char **expected = (char *[6]){"split", "this", "for", "me", "!",
-				NULL};
+										  NULL};
 			result = ft_split("      split       this for   me  !       ", ' ');
-			// '',
-			'hola', 'como' int i = 0;
+			int i = 0;
 			while (result[i])
 			{
 				printf("result:%s\n", result[i]);
@@ -98,22 +103,17 @@ int	main(int argc, char **argv)
 			}
 			free(result);
 		}
-		if (argv[2] == 'strjoin')
+		if (ft_strncmp(argv[1], "strjoin", ft_strlen(argv[1])) == 0)
 		{
 			char *src1 = "hello";
 			char *src2 = "_welcome";
-			printf("%zu + %zu\n", ft_strlen(src1), ft_strlen(src2));
+			printf("src1:%zu + src2:%zu\n", ft_strlen(src1), ft_strlen(src2));
 			char *res = ft_strjoin(src1, src2);
 			printf("%s\n", res);
 			free(res);
 		}
-		if (argv[2] == 'strmapi')
-		{
-			char *strm = ft_strmapi("hola", ft_toupper);
-			printf("%s\n", strm);
-			free(strm);
-		}
-		if (argv[2] == 'strtrim')
+
+		if (ft_strncmp(argv[1], "strtrim", ft_strlen(argv[1])) == 0)
 		{
 			char *s1 = "-+-+hola-+-+";
 			char *s2 = "hola";
@@ -122,13 +122,14 @@ int	main(int argc, char **argv)
 			printf("-----------\n");
 			printf("%s\n", s2);
 		}
-		if (argv[2] == 'strlcat')
+		if (ft_strncmp(argv[1], "strlcat", ft_strlen(argv[1])) == 0)
 		{
-			char dst[13] = "Hello, ";
+			char dst[13] = "hello, ";
 			char src[] = "world!";
 			size_t size = 13;
 
-			ft_strlcat(dst, src, size);
+			int lend = strlcat(dst, src, size);
+			printf("len_dest = %d\n", lend);
 			printf("%s\n", dst); // Expected: "Hello, world!"
 		}
 	}
