@@ -1,18 +1,17 @@
 #include "libft.h"
-#include <stdio.h>
-#include <fcntl.h>
-#include <string.h>
 #include <bsd/string.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+
 // cc main.c -I. -L. -lft -o outmain
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	if (argc > 1)
 	{
-
 		if (ft_strncmp(argv[1], "atoi", ft_strlen(argv[1])) == 0)
 		{
-
 			printf("%d\n", ft_atoi("-4000000000"));
 			printf("%d\n", atoi("-4000000000"));
 			printf("%ld\n", strtol("-4000000000", 0, 10));
@@ -48,22 +47,6 @@ int main(int argc, char **argv)
 			free(s);
 		}
 
-		if (ft_strncmp(argv[1], "lstadd_front", ft_strlen(argv[1])) == 0)
-		{
-			t_list *h;
-			t_list **lst;
-
-			lst = &h;
-
-			h = ft_lstnew("B");
-			h->next = ft_lstnew("C");
-			ft_lstadd_front(lst, ft_lstnew("A"));
-			while (h != NULL)
-			{
-				printf("%s ", (char *)h->content);
-				h = h->next;
-			}
-		}
 		if (ft_strncmp(argv[1], "memmove", ft_strlen(argv[1])) == 0)
 		{
 			// char dest_str[] = "Tutorialspoint";
@@ -90,7 +73,7 @@ int main(int argc, char **argv)
 		{
 			char **result;
 			char **expected = (char *[6]){"split", "this", "for", "me", "!",
-										  NULL};
+				NULL};
 			result = ft_split("      split       this for   me  !       ", ' ');
 			int i = 0;
 			while (result[i])
@@ -124,13 +107,10 @@ int main(int argc, char **argv)
 		}
 		if (ft_strncmp(argv[1], "strlcat", ft_strlen(argv[1])) == 0)
 		{
-			char dst[13] = "hello, ";
-			char src[] = "world!";
-			size_t size = 13;
-
-			int lend = strlcat(dst, src, size);
-			printf("len_dest = %d\n", lend);
-			printf("%s\n", dst); // Expected: "Hello, world!"
+			printf("running strlcat\n");
+			char b[7] = "nyan !";
+			int r = ft_strlcat(((void *)0), b, 0);
+			printf("%d\n", r);
 		}
 	}
 }
