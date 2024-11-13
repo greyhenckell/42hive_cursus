@@ -18,14 +18,6 @@ char	*ft_strdup(char *src)
 	str_p = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
 	if (str_p == NULL)
 		return (NULL);
-	ft_strlcpy(str_p, src, ft_strlen(src)+1);
+	ft_strlcpy(str_p, src, ft_strlen(src) + 1);
 	return (str_p);
 }
-/*
-int	main(void)
-{
-    char source[] = "hola";
-    char *copy = ft_strdup(source);
-    printf("%s\n",copy);
-    return (0);
-}*/

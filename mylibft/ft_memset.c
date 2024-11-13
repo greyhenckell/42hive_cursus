@@ -12,9 +12,6 @@
 
 #include "libft.h"
 
-//#include <string.h>
-//#include <stdio.h>
-
 void	*ft_memset(void *s, int c, size_t n)
 {
 	unsigned char	*p;
@@ -30,18 +27,3 @@ void	*ft_memset(void *s, int c, size_t n)
 		p[i++] = uc;
 	return (s);
 }
-/*
-int	main(void)
-{
-	char src[] = "welcome well";
-	char src2[] = "welcome well";
-
-	printf("%lu vs %lu\n", sizeof(src), sizeof(src2));
-	ft_memset(src, -10, ft_strlen(src));
-	printf("%s\n", src);
-	printf("------\n");
-	memset(src2, -10, ft_strlen(src2));
-	printf("%s\n", src2);
-	if (ft_strncmp(src,src2, ft_strlen(src)) == 0)
-		printf("OK\n");
-}*/

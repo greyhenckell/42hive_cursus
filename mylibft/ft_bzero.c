@@ -21,10 +21,3 @@ void	ft_bzero(void *s, size_t n)
 	while (i < n)
 		p[i++] = 0;
 }
-/*
-int	main(void)
-{
-	char s[] = "hola";
-	bzero(s, 2);
-	printf("%s\n",s);
-}*/

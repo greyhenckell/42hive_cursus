@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
-#include <unistd.h>
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -31,8 +30,3 @@ void	ft_putnbr_fd(int n, int fd)
 	out = (n % 10) + '0';
 	write(fd, &out, 1);
 }
-/*
-int	main(void)
-{
-	ft_putnbr_fd(2147483648, 1);
-}*/

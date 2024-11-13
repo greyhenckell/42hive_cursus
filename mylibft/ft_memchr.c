@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include <stdio.h>
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
@@ -27,9 +26,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 			return ((void *)(p + i - 1));
 	return (NULL);
 }
-/*
-int main()
-{
-	char s[] = "hi hiver";
-	printf("%s\n", (char *)ft_memchr(s, 0, sizeof(s)));
-}*/

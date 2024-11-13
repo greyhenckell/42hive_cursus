@@ -38,13 +38,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
-/*
-int	main(void)
-{
-	char *big = "oh no not the empty string !";
-	char *small = "";
-	//char *small = "";
-	printf("len:%lu\n", strlen(big));
-	printf("%s\n",ft_strnstr((void*)0, small, 0 ));
-	printf("%s\n",strnstr((void*)0, small, 0 ));
-}*/

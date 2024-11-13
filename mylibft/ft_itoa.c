@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include <stdio.h>
 
 static int	integer_length(int n)
 {
@@ -35,7 +34,7 @@ static int	integer_length(int n)
 	return (len);
 }
 
-static	void	ft_putnbr(int n, char *out)
+static void	ft_putnbr(int n, char *out)
 {
 	int	mod;
 	int	idx;
@@ -71,7 +70,7 @@ static void	reverse_string(char *out)
 	char			temp;
 
 	start = 0;
-	end = ft_strlen(out)-1;
+	end = ft_strlen(out) - 1;
 	while (start < end)
 	{
 		temp = out[start];
@@ -102,10 +101,3 @@ char	*ft_itoa(int n)
 	reverse_string(out);
 	return (out);
 }
-/*
-int main()
-{
-	char *s = ft_itoa(0);
-	printf("%s\n",s);
-	free(s);
-}*/

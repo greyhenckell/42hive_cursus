@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-//#include <stdio.h>
-//#include <stdlib.h>
 int	ft_atoi(const char *nptr)
 {
 	long	out;
@@ -42,11 +40,3 @@ int	ft_atoi(const char *nptr)
 	}
 	return ((int)(out * sign));
 }
-/*
-int	main(void)
-{
-	printf("%d\n", ft_atoi("-4000000000"));
-	printf("%d\n", atoi("-4000000000"));
-	printf("%ld\n", strtol("-4000000000", 0,10));
-	printf("%d\n", (int)strtol("-4000000000",0,10));
-}*/

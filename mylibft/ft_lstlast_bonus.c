@@ -22,16 +22,3 @@ t_list	*ft_lstlast(t_list *lst)
 	}
 	return (lst);
 }
-/*
-int	main(void)
-{
-	t_list	*h;
-	t_list	*out;
-
-	h = ft_lstnew("A");
-	h->next = ft_lstnew("B");
-	h->next->next = ft_lstnew("C");
-	out = ft_lstlast(h);
-	printf("%s", (char *)out->content);
-}
-*/

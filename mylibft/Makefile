@@ -49,11 +49,11 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "files Compiled .o generated"
 
-bonus: $(BOBJS) 
-	$(AR) $(ARFLAGS) $(NAME) $(BOBJS)
-
 so:
 	$(CC) -nostartfiles -shared -o libft.so $(OBJS)
+
+bonus: $(BOBJS) 
+	$(AR) $(ARFLAGS) $(NAME) $(BOBJS)
 
 clean:
 	@rm -rf *.o $(NAME)

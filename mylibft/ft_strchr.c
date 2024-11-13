@@ -12,9 +12,6 @@
 
 #include "libft.h"
 
-//#include <string.h>
-//#include <stdio.h>
-
 char	*ft_strchr(const char *s, int c)
 {
 	char	*p;
@@ -30,9 +27,3 @@ char	*ft_strchr(const char *s, int c)
 		return (NULL);
 	return (p + i);
 }
-/*
-int	main(void)
-{
-	printf("mmyv:%s\n", ft_strchr("hola sfgsgsereh", 50));
-	printf("orig:%s\n", strchr("hola sfgsgsereh", 50));
-}*/

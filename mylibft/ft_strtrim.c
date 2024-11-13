@@ -49,13 +49,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ft_strlcpy(out, s1, lenstr - i + 1);
 	return (out);
 }
-/*
-int main()
-{
-	char *s1 = "-+-+hola-+-+";
-        char *s2 = "hola";
-        char *ret = ft_strtrim(s1, "-+");
-	printf("%s\n",ret);
-	printf("-----------\n");
-	printf("%s\n",s2);
-}*/

@@ -24,14 +24,3 @@ t_list	*ft_lstnew(void *content)
 	out->next = NULL;
 	return (out);
 }
-/*
-int	main(void)
-{
-	t_list	*test;
-
-	test = NULL;
-	test = ft_lstnew("hola");
-	printf("%p\n", test);
-	free(test);
-}
-*/

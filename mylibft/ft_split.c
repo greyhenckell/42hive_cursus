@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
 #include "libft.h"
 
 int	count_items(char const *str, char delim)
@@ -93,21 +92,3 @@ char	**ft_split(char const *s, char c)
 	allocate_items(out, s, c);
 	return (out);
 }
-/*
-int	main(void)
-{
-	char **result;
-	char	**expected = (char*[6]){"split", "this", "for", "me", "!", NULL};
-	result = ft_split("      split       this for   me  !       ", ' '); // '',
-		'hola', 'como'
-	int i = 0;
-	while (result[i])
-	{
-		printf("result:%s\n", result[i]);
-		if (strcmp(result[i], expected[i]))
-				printf("error item %d",i+1);
-		free(result[i]);
-		i++;
-	}
-	free(result);
-}*/

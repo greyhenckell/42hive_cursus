@@ -30,11 +30,3 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-/*
-int	main(void)
-{
-	char d[10];
-	char s[] = "hi hiver!";
-	char *out  = memcpy(d, s, 20);
-	printf("%s\n", out);
-}*/

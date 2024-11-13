@@ -27,10 +27,3 @@ int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 	}
 	return (0);
 }
-/*
-int main()
-{
-    printf("%d\n", ft_strncmp("abcdef", "abcdefghijklmnop", 6));
-    printf("---------\n");
-    printf("%d\n", strncmp("abcdef", "abcdefghijklmnop", 6));
-}*/
