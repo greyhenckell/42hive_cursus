@@ -2,7 +2,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-int check_type(va_list p, char c)
+static int check_type(va_list p, char c)
 {
     int count;
     count = 0;
@@ -10,7 +10,7 @@ int check_type(va_list p, char c)
     {
         char val = va_arg(p, int);
         count++;
-        write(1, &val, sizeof(val));
+        ft_putchar(val);
     }
 
     if (c == 'd' || c == 'i')
@@ -30,13 +30,13 @@ int check_type(va_list p, char c)
     return count;
 }
 
-char ft_toupper_wrap(unsigned int i, char c)
+static char ft_toupper_wrap(unsigned int i, char c)
 {
     (void)i;
     return ((char)ft_toupper(c));
 }
 
-int check_type_unsigned(va_list p, char c)
+static int check_type_unsigned(va_list p, char c)
 {
     int count;
     count = 0;
@@ -63,28 +63,22 @@ int ft_printf(const char *fmt, ...)
 {
     va_list arg_ptr;
     int len;
-    len = 0;
-
-    char *set = "csdi";
-    char *set_h = "puxX";
-
-    va_start(arg_ptr, fmt);
     int start;
-    int end;
+
+    char *set = "csdipuxX";
+    va_start(arg_ptr, fmt);
+
+    len = 0;
     start = 0;
     while (fmt[start] != '\0')
     {
-        if (fmt[start] == '%' && ft_strchr(set, fmt[start + 1]))
+        if ((fmt[start] == '%') && ft_strchr(set, fmt[start + 1]))
         {
             // call arg
-            len += check_type(arg_ptr, fmt[start + 1]);
-            start++;
-        }
-        else if (fmt[start] == '%' && ft_strchr(set_h, fmt[start + 1]))
-        {
-            // call arg
-            len += check_type_unsigned(arg_ptr, fmt[start + 1]);
-            start++;
+            if (ft_strchr("csdi", fmt[start + 1]))
+                len += check_type(arg_ptr, fmt[++start]);
+            else
+                len += check_type_unsigned(arg_ptr, fmt[++start]);
         }
         else
         {
@@ -106,6 +100,6 @@ int ft_printf(const char *fmt, ...)
 //  va_end(va_list p) : end the variadic fn
 int main()
 {
-    ft_printf("testing: %X, test_string:%s\n", -1988, "welcome!!!");
-    printf("testing: %X, test_string:%s\n", -1988, "welcome!!!");
+    ft_printf("dec:%%%d, X: %X, h:%x, str:%s\n", -100, -1988, 56645646, "welcome!!!");
+    printf("dec:%%%d, X: %X, h:%x, str:%s\n", -100, -1988, 56645646, "welcome!!!");
 }
