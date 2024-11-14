@@ -12,26 +12,24 @@
 
 #include "ft_printf.h"
 
-static int	integer_length(unsigned int n)
+static int integer_length(unsigned long n)
 {
-	int	len;
+	int len;
 
 	len = 0;
-	if (!n)
-		return (1);
 	while (n > 0)
 	{
+		n = n / 16;
 		len++;
-		n = n / 10;
 	}
 	return (len);
 }
 
-static void	reverse_string(char *out)
+static void reverse_string(char *out)
 {
-	unsigned int	start;
-	unsigned int	end;
-	char			temp;
+	unsigned int start;
+	unsigned int end;
+	char temp;
 
 	start = 0;
 	end = ft_strlen(out) - 1;
@@ -45,22 +43,24 @@ static void	reverse_string(char *out)
 	}
 }
 
-char	*ft_ultoa(unsigned long n, char c)
+char *ft_ultoa(unsigned long n, char c)
 {
-	char	*out;
-	int		size;
+	char *out;
+	int size;
 
 	size = integer_length(n);
+	if (n == 0)
+	{
+		out = (char *)malloc(2 * sizeof(char));
+		if (out)
+			ft_strlcpy(out, "0", 2);
+		return (out);
+	}
 	out = (char *)malloc((size + 1) * sizeof(char));
 	if (out == NULL)
 		return (NULL);
 	ft_memset(out, 0, size);
-	if (n == 0)
-	{
-		out[0] = '0';
-		out[1] = '\0';
-		return (out);
-	}
+
 	if (c == 'x' || c == 'X')
 		ft_putlonghex(n, out);
 	else

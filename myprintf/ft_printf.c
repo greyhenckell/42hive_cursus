@@ -1,15 +1,17 @@
 #include <stdarg.h>
 #include "ft_printf.h"
+#include <stdio.h>
 
+// cc ft_printf.c -Iincludes -L. -lft -o outmain.o
 
 static int check_type(va_list p, char c)
 {
     int count;
-    count = 0;
+
     if (c == 'c')
     {
-        char val = va_arg(p, int);
-        count++;
+        char val = (char)va_arg(p, int);
+        count = 1;
         ft_putchar(val);
     }
 
@@ -24,13 +26,16 @@ static int check_type(va_list p, char c)
     if (c == 's')
     {
         char *val = va_arg(p, char *);
+        if (!val)
+            val = "(null)";
         count = ft_strlen(val);
         write(1, val, count);
     }
     if (c == '%')
     {
         char val = '%';
-        write(1, &val,1);
+        count = 1;
+        write(1, &val, 1);
     }
     return count;
 }
@@ -61,13 +66,23 @@ static int check_type_unsigned(va_list p, char c)
             write(1, s, count);
         free(s);
     }
-    if ( c == 'p')
+    if (c == 'p')
     {
         void *val = va_arg(p, void *);
-        char *s = ft_ultoa((unsigned long)val, 'x');
-        write(1,"0x",2);
-        write(1, s, ft_strlen(s));
-        free(s);
+        if (!val)
+        {
+            val = "(nil)";
+            count = ft_strlen(val);
+            write(1, val, count);
+        }
+        else
+        {
+            char *s = ft_ultoa((unsigned long)val, 'x');
+            count = ft_strlen(s) + 2;
+            write(1, "0x", 2);
+            write(1, s, count - 2);
+            free(s);
+        }
     }
     return count;
 }
@@ -111,10 +126,13 @@ int ft_printf(const char *fmt, ...)
 //  void va_start(va_list p, N): access to variadic fn args ,
 //  type va_arg(va_list p, type): retrieve next arg with type <type> ,
 //  va_end(va_list p) : end the variadic fn
-/*int main()
+/*
+int main()
 {
-    int val = 20;
-    ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val,-100, -1988, 56645646, "welcome!!!");
-    printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val,-100, -1988, 56645646, "welcome!!!");
-    
-}*/
+    // int val = 20;
+    //  ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
+    //  printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
+    ft_printf("%p, %p\n", 0, 0);
+    printf("%p, %p\n", 0, 0);
+}
+*/
