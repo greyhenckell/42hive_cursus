@@ -10,22 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-static int integer_length(int n)
+static int	integer_length(unsigned int n)
 {
-	int len;
+	int	len;
 
 	len = 0;
-	if (n == INT_MIN)
-		return (11);
 	if (!n)
 		return (1);
-	if (n < 0)
-	{
-		len++;
-		n *= -1;
-	}
 	while (n > 0)
 	{
 		len++;
@@ -34,40 +27,11 @@ static int integer_length(int n)
 	return (len);
 }
 
-static void ft_putnbr(int n, char *out)
+static void	reverse_string(char *out)
 {
-	int mod;
-	int idx;
-	int sign;
-
-	idx = 0;
-	sign = 0;
-	if (n == INT_MIN)
-	{
-		ft_strlcpy(out, "8463847412-", 12);
-		return;
-	}
-	if (n < 0)
-	{
-		sign = 1;
-		n *= -1;
-	}
-	while (n > 0)
-	{
-		mod = n % 10;
-		n = n / 10;
-		out[idx++] = mod + 48;
-	}
-	if (sign)
-		out[idx++] = '-';
-	out[idx++] = '\0';
-}
-
-static void reverse_string(char *out)
-{
-	unsigned int start;
-	unsigned int end;
-	char temp;
+	unsigned int	start;
+	unsigned int	end;
+	char			temp;
 
 	start = 0;
 	end = ft_strlen(out) - 1;
@@ -81,23 +45,26 @@ static void reverse_string(char *out)
 	}
 }
 
-char *ft_itoa(int n)
+char	*ft_ultoa(unsigned long n, char c)
 {
-	char *out;
-	int size;
+	char	*out;
+	int		size;
 
 	size = integer_length(n);
 	out = (char *)malloc((size + 1) * sizeof(char));
 	if (out == NULL)
 		return (NULL);
 	ft_memset(out, 0, size);
-	if (n * (-1) == 0)
+	if (n == 0)
 	{
 		out[0] = '0';
 		out[1] = '\0';
 		return (out);
 	}
-	ft_putnbr(n, out);
+	if (c == 'x' || c == 'X')
+		ft_putlonghex(n, out);
+	else
+		ft_putunbr(n, out);
 	reverse_string(out);
 	return (out);
 }

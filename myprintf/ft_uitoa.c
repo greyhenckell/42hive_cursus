@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 static int integer_length(unsigned int n)
 {
@@ -62,7 +62,7 @@ char *ft_uitoa(unsigned int n, char c)
         out[1] = '\0';
         return (out);
     }
-    if (c == 'x' || 'X')
+    if (c == 'x' || c == 'X')
         ft_puthex(n, out);
     else
         ft_putunbr(n, out);

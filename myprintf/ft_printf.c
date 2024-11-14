@@ -1,6 +1,6 @@
 #include <stdarg.h>
-#include "libft.h"
-#include <stdio.h>
+#include "ft_printf.h"
+
 
 static int check_type(va_list p, char c)
 {
@@ -26,6 +26,11 @@ static int check_type(va_list p, char c)
         char *val = va_arg(p, char *);
         count = ft_strlen(val);
         write(1, val, count);
+    }
+    if (c == '%')
+    {
+        char val = '%';
+        write(1, &val,1);
     }
     return count;
 }
@@ -56,6 +61,14 @@ static int check_type_unsigned(va_list p, char c)
             write(1, s, count);
         free(s);
     }
+    if ( c == 'p')
+    {
+        void *val = va_arg(p, void *);
+        char *s = ft_ultoa((unsigned long)val, 'x');
+        write(1,"0x",2);
+        write(1, s, ft_strlen(s));
+        free(s);
+    }
     return count;
 }
 
@@ -65,7 +78,7 @@ int ft_printf(const char *fmt, ...)
     int len;
     int start;
 
-    char *set = "csdipuxX";
+    char *set = "%csdipuxX";
     va_start(arg_ptr, fmt);
 
     len = 0;
@@ -75,7 +88,7 @@ int ft_printf(const char *fmt, ...)
         if ((fmt[start] == '%') && ft_strchr(set, fmt[start + 1]))
         {
             // call arg
-            if (ft_strchr("csdi", fmt[start + 1]))
+            if (ft_strchr("%csdi", fmt[start + 1]))
                 len += check_type(arg_ptr, fmt[++start]);
             else
                 len += check_type_unsigned(arg_ptr, fmt[++start]);
@@ -98,8 +111,10 @@ int ft_printf(const char *fmt, ...)
 //  void va_start(va_list p, N): access to variadic fn args ,
 //  type va_arg(va_list p, type): retrieve next arg with type <type> ,
 //  va_end(va_list p) : end the variadic fn
-int main()
+/*int main()
 {
-    ft_printf("dec:%%%d, X: %X, h:%x, str:%s\n", -100, -1988, 56645646, "welcome!!!");
-    printf("dec:%%%d, X: %X, h:%x, str:%s\n", -100, -1988, 56645646, "welcome!!!");
-}
+    int val = 20;
+    ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val,-100, -1988, 56645646, "welcome!!!");
+    printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val,-100, -1988, 56645646, "welcome!!!");
+    
+}*/

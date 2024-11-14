@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 11:23:12 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/31 11:39:19 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 17:48:21 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/04 10:41:16 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-char	*ft_strdup(char *src)
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
-	char	*str_p;
+	unsigned int	i;
+	unsigned char	*p1;
+	unsigned char	*p2;
 
-	str_p = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
-	if (str_p == NULL)
-		return (NULL);
-	ft_strlcpy(str_p, src, ft_strlen(src) + 1);
-	return (str_p);
+	p1 = (unsigned char *)s1;
+	p2 = (unsigned char *)s2;
+	i = 0;
+	while ((i < n) && (p1[i] != '\0' || p2[i] != '\0'))
+	{
+		if (p1[i] != p2[i])
+			return ((p1[i] > p2[i]) - (p2[i] > p1[i]));
+		i++;
+	}
+	return (0);
 }

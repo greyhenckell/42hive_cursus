@@ -6,7 +6,7 @@
 #    By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/31 12:44:14 by fhenckel          #+#    #+#              #
-#    Updated: 2024/11/13 12:24:04 by fhenckel         ###   ########.fr        #
+#    Updated: 2024/11/14 19:03:55 by fhenckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 # makefile for libft functions
 #
 
-NAME = libft.a
+NAME = libftprintf.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -24,7 +24,7 @@ INCLUDES = -Iincludes
 AR = ar
 ARFLAGS = rcs
 
-SRC_DIR = src
+SRC_DIR = .
 #SRCS = $(shell ls $(SRC_DIR)/*.c | grep -v "bonus.c")
 SRCS = $(shell ls $(SRC_DIR)/*.c)
 

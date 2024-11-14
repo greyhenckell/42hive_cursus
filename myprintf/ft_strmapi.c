@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 10:16:24 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/10/29 10:19:54 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/11/06 15:37:22 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/06 15:45:56 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(int c)
+#include "ft_printf.h"
+
+char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		return (1);
-	return (0);
+	char *out;
+	int i;
+
+	i = 0;
+	out = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (out == NULL)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		out[i] = (*f)(i, s[i]);
+		i++;
+	}
+	out[i] = '\0';
+	return (out);
 }
-/*
-int main()
-{
-    char s[] = "h123ola";
-    int i = 0;
-    int d;
-    while (s[i] != '\0')
-    {
-        d = s[i];
-        printf("%d\n", d);
-        printf("%c-> %d\n", s[i], ft_isalpha(d));
-        i++;
-    }
-}
-*/
