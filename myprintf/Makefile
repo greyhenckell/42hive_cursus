@@ -28,14 +28,14 @@ SRC_DIR = src
 #SRCS = $(shell ls $(SRC_DIR)/*.c | grep -v "bonus.c")
 SRCS = $(shell ls $(SRC_DIR)/*.c)
 
-BSRCS = $(shell ls $(SRC_DIR)/*bonus.c)
+#BSRCS = $(shell ls $(SRC_DIR)/*bonus.c)
 
 .PHONY: all clean fclean re
 
 #OBJS = $(SRCS:.c=.o)
 # Generate corresponding .o object files for each .c file
 OBJS = $(SRCS:$(SRC_DIR)/%.c=%.o)
-BOBJS = $(BSRCS:$(SRC_DIR)/%.c=%.o)
+#BOBJS = $(BSRCS:$(SRC_DIR)/%.c=%.o)
 
 all:	$(NAME)
 	@echo  Featured compiler named $(NAME) has been compiled

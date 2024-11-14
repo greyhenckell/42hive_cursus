@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-static int	integer_length(int n)
+static int integer_length(int n)
 {
-	int	len;
+	int len;
 
 	len = 0;
 	if (n == INT_MIN)
@@ -34,18 +34,18 @@ static int	integer_length(int n)
 	return (len);
 }
 
-static void	ft_putnbr(int n, char *out)
+static void ft_putnbr(int n, char *out)
 {
-	int	mod;
-	int	idx;
-	int	sign;
+	int mod;
+	int idx;
+	int sign;
 
 	idx = 0;
 	sign = 0;
 	if (n == INT_MIN)
 	{
 		ft_strlcpy(out, "8463847412-", 12);
-		return ;
+		return;
 	}
 	if (n < 0)
 	{
@@ -63,11 +63,11 @@ static void	ft_putnbr(int n, char *out)
 	out[idx++] = '\0';
 }
 
-static void	reverse_string(char *out)
+static void reverse_string(char *out)
 {
-	unsigned int	start;
-	unsigned int	end;
-	char			temp;
+	unsigned int start;
+	unsigned int end;
+	char temp;
 
 	start = 0;
 	end = ft_strlen(out) - 1;
@@ -81,10 +81,10 @@ static void	reverse_string(char *out)
 	}
 }
 
-char	*ft_itoa(int n)
+char *ft_itoa(int n)
 {
-	char	*out;
-	int		size;
+	char *out;
+	int size;
 
 	size = integer_length(n);
 	out = (char *)malloc((size + 1) * sizeof(char));
