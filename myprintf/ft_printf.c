@@ -40,31 +40,30 @@ static int check_type(va_list p, char c)
     return count;
 }
 
+/*
 static char ft_toupper_wrap(unsigned int i, char c)
 {
     (void)i;
     return ((char)ft_toupper(c));
-}
+}*/
 
 static int check_type_unsigned(va_list p, char c)
 {
     int count;
     count = 0;
 
-    if (c == 'u' || c == 'x' || c == 'X')
+    if (c == 'x' || c == 'X')
     {
-        unsigned int val = va_arg(p, unsigned int);
-        char *s = ft_uitoa(val, c);
-        count = ft_strlen(s);
-        if (c == 'X')
-        {
-            char *m = ft_strmapi(s, ft_toupper_wrap);
-            write(1, m, count);
-            free(m);
-        }
-        else
-            write(1, s, count);
-        free(s);
+        unsigned long  val = va_arg(p, unsigned long);
+        ft_putnbr_base(val, 16);
+        count = ft_numlen(val, 16);
+        
+    }
+    if (c == 'u')
+    {
+        unsigned int    val = va_arg(p, unsigned int);
+        ft_putnbr_base(val, 10);
+        count = ft_numlen(val, 10);        
     }
     if (c == 'p')
     {
@@ -72,16 +71,13 @@ static int check_type_unsigned(va_list p, char c)
         if (!val)
         {
             val = "(nil)";
-            count = ft_strlen(val);
             write(1, val, count);
         }
         else
         {
-            char *s = ft_ultoa((unsigned long)val, 'x');
-            count = ft_strlen(s) + 2;
             write(1, "0x", 2);
-            write(1, s, count - 2);
-            free(s);
+            ft_putnbr_base((unsigned long long)val, 16);
+            count = ft_numlen((unsigned long long)val,16) +2;
         }
     }
     return count;
@@ -120,19 +116,16 @@ int ft_printf(const char *fmt, ...)
 
     return len;
 }
-
-// va_list : var type
-// macros:
-//  void va_start(va_list p, N): access to variadic fn args ,
-//  type va_arg(va_list p, type): retrieve next arg with type <type> ,
-//  va_end(va_list p) : end the variadic fn
 /*
 int main()
 {
-    // int val = 20;
-    //  ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
-    //  printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
-    ft_printf("%p, %p\n", 0, 0);
-    printf("%p, %p\n", 0, 0);
+    int val = 20;
+    ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
+    printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
+    //int ftr = ft_printf("lowe_hex: %x, ptr:%p, unint:%u\n", 56645646, &val, -9223372036854775808);
+    //ft_printf("lowe_hex: %x\n", -1);
+    //printf("lowe_hex: %x\n", -1);
+
+    //printf("fprint:%d vs rpprinnt:%d",ftr, rtr);
 }
 */
