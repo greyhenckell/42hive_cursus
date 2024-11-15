@@ -52,32 +52,40 @@ static int check_type_unsigned(va_list p, char c)
     int count;
     count = 0;
 
-    if (c == 'x' || c == 'X')
+    if (c == 'u' || c == 'x' || c == 'X')
     {
-        unsigned long  val = va_arg(p, unsigned long);
-        ft_putnbr_base(val, 16);
-        count = ft_numlen(val, 16);
-        
+        unsigned int val = va_arg(p, unsigned int);
+        if (c == 'x')
+        {
+            ft_putnbr_base(val, 16, 97);
+            count = ft_numlen(val, 16);
+        }
+        else if (c == 'X')
+        {
+            ft_putnbr_base(val, 16, 65);
+            count = ft_numlen(val, 16);
+        }
+        else
+        {
+            ft_putnbr_base(val, 10, 0);
+            count = ft_numlen(val, 10);
+        }
     }
-    if (c == 'u')
-    {
-        unsigned int    val = va_arg(p, unsigned int);
-        ft_putnbr_base(val, 10);
-        count = ft_numlen(val, 10);        
-    }
+
     if (c == 'p')
     {
         void *val = va_arg(p, void *);
         if (!val)
         {
             val = "(nil)";
+            count = ft_strlen(val);
             write(1, val, count);
         }
         else
         {
             write(1, "0x", 2);
-            ft_putnbr_base((unsigned long long)val, 16);
-            count = ft_numlen((unsigned long long)val,16) +2;
+            ft_putnbr_base((unsigned long)val, 16, 97);
+            count = ft_numlen((unsigned long)val, 16) + 2;
         }
     }
     return count;
@@ -122,10 +130,10 @@ int main()
     int val = 20;
     ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
     printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
-    //int ftr = ft_printf("lowe_hex: %x, ptr:%p, unint:%u\n", 56645646, &val, -9223372036854775808);
-    //ft_printf("lowe_hex: %x\n", -1);
-    //printf("lowe_hex: %x\n", -1);
+    // int ftr = ft_printf("lowe_hex: %x, ptr:%p, unint:%u\n", 56645646, &val, -9223372036854775808);
+    // ft_printf("lowe_hex: %x\n", -1);
+    // printf("lowe_hex: %x\n", -1);
 
-    //printf("fprint:%d vs rpprinnt:%d",ftr, rtr);
+    // printf("fprint:%d vs rpprinnt:%d",ftr, rtr);
 }
 */
