@@ -18,10 +18,12 @@ static int check_type(va_list p, char c)
     if (c == 'd' || c == 'i')
     {
         int val = va_arg(p, int);
-        char *s = ft_itoa(val);
+        ft_putnbr_base(val, 10, 0);
+        count = ft_numlen(val, 10);
+        /*char *s = ft_itoa(val);
         count = ft_strlen(s);
         write(1, s, count);
-        free(s);
+        free(s);*/
     }
     if (c == 's')
     {
@@ -40,13 +42,6 @@ static int check_type(va_list p, char c)
     return count;
 }
 
-/*
-static char ft_toupper_wrap(unsigned int i, char c)
-{
-    (void)i;
-    return ((char)ft_toupper(c));
-}*/
-
 static int check_type_unsigned(va_list p, char c)
 {
     int count;
@@ -58,12 +53,12 @@ static int check_type_unsigned(va_list p, char c)
         if (c == 'x')
         {
             ft_putnbr_base(val, 16, 97);
-            count = ft_numlen(val, 16);
+            count = ft_unsigned_numlen(val, 16);
         }
         else if (c == 'X')
         {
             ft_putnbr_base(val, 16, 65);
-            count = ft_numlen(val, 16);
+            count = ft_unsigned_numlen(val, 16);
         }
         else
         {
@@ -85,7 +80,7 @@ static int check_type_unsigned(va_list p, char c)
         {
             write(1, "0x", 2);
             ft_putnbr_base((unsigned long)val, 16, 97);
-            count = ft_numlen((unsigned long)val, 16) + 2;
+            count = ft_unsigned_numlen((unsigned long)val, 16) + 2;
         }
     }
     return count;
@@ -127,13 +122,13 @@ int ft_printf(const char *fmt, ...)
 /*
 int main()
 {
-    int val = 20;
-    ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
-    printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", &val, -100, -1988, 56645646, "welcome!!!");
-    // int ftr = ft_printf("lowe_hex: %x, ptr:%p, unint:%u\n", 56645646, &val, -9223372036854775808);
-    // ft_printf("lowe_hex: %x\n", -1);
-    // printf("lowe_hex: %x\n", -1);
+    // int val = -1;
+    int r1 = ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", (void *)LONG_MIN, -100, -1988, 56645646, "welcome!!!");
+    int r2 = printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", (void *)LONG_MIN, -100, -1988, 56645646, "welcome!!!");
+    //  int ftr = ft_printf("lowe_hex: %x, ptr:%p, unint:%u\n", 56645646, &val, -9223372036854775808);
+    // int r1 = ft_printf("lowe_hex: %p\n", (void *)LONG_MIN);
+    // int r2 = printf("lowe_hex: %p\n", (void *)LONG_MIN);
 
-    // printf("fprint:%d vs rpprinnt:%d",ftr, rtr);
+    printf("fprint:%d vs rpprinnt:%d", r1, r2);
 }
 */

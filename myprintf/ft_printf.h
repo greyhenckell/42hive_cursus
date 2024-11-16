@@ -33,7 +33,8 @@ int ft_printf(const char *fmt, ...);
 size_t ft_strlcpy(char *dst, const char *src, size_t size);
 void *ft_memset(void *s, int c, size_t n);
 int ft_toupper(int c);
-void ft_putnbr_base(unsigned long long n, int base, int c);
-int ft_numlen(unsigned long long n, int base);
+void ft_putnbr_base(long long n, int base, int c);
+int ft_unsigned_numlen(unsigned long n, int base);
+int ft_numlen(long long n, int base);
 
 #endif

@@ -1,15 +1,24 @@
 #include "ft_printf.h"
-#include <stdio.h>
-void ft_putnbr_base(unsigned long long n, int base, int c)
+
+void ft_putnbr_base(long long n, int base, int c)
 {
 	char out;
+	unsigned long long temp;
 
-	if (n > (unsigned long long)(base - 1))
-		ft_putnbr_base(n / base, base, c);
-
-	if ((n % base) > 9)
-		out = c + (n % base) - 10;
+	if (n < 0 && base == 10)
+	{
+		write(1, "-", 1);
+		temp = (unsigned long long)(-n);
+	}
 	else
-		out = (n % base) + 48;
+		temp = (unsigned long long)n;
+
+	if (temp >= (unsigned long long)base)
+		ft_putnbr_base((long long)(temp / base), base, c);
+
+	if ((temp % base) > 9)
+		out = c + (temp % base) - 10;
+	else
+		out = (temp % base) + 48;
 	write(1, &out, 1);
 }
