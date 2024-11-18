@@ -125,19 +125,3 @@ int	ft_printf(const char *fmt, ...)
 	va_end(arg_ptr);
 	return (len);
 }
-/*
-int	main(void)
-{
-	int	r1;
-
-	//int	r2;
-	r1 = ft_printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n",
-			(void *)LONG_MIN, -100, -1988, 56645646, "welcome!!!");
-	r2 = printf("pointer: %p dec:%%%d, X: %X, h:%x, str:%s\n", (void *)LONG_MIN,
-			-100, -1988, 56645646, "welcome!!!");
-	printf("fprint:%d vs rpprinnt:%d", r1, r2);
-	r1 = ft_printf(" NULL %s NULL\n", NULL);
-	//r2 = printf(" NULL %s NULL ", NULL);
-	printf("fprint:%d ", r1);
-}
-*/

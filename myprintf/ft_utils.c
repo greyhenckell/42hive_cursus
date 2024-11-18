@@ -33,26 +33,6 @@ void	ft_putnbr_base(long long n, int base, int c)
 	write(1, &out, 1);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*out;
-	size_t	i;
-
-	if (start >= ft_strlen(s))
-		len = 0;
-	i = 0;
-	out = (char *)malloc((len + 1) * sizeof(char));
-	if (out == NULL)
-		return (NULL);
-	while (i < len)
-	{
-		out[i] = *(s + start + i);
-		i++;
-	}
-	out[i] = '\0';
-	return (out);
-}
-
 void	ft_putchar(char c)
 {
 	write(1, &c, sizeof(c));
