@@ -1,29 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 17:05:47 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/01 16:59:27 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/11/18 12:20:11 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/18 12:20:13 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-char	*ft_strchr(const char *s, int c)
+int	ft_unsigned_numlen(unsigned long n, int base)
 {
-	char	*p;
-	size_t	i;
+	int	len;
 
-	p = (char *)s;
-	if (c == 0)
-		return (p + ft_strlen(s));
-	i = 0;
-	while (s[i] != (char)c && s[i] != '\0')
-		i++;
-	if (s[i] == 0)
-		return (NULL);
-	return (p + i);
+	if (n == 0)
+		return (1);
+	len = 0;
+	while (n > 0)
+	{
+		n = n / base;
+		len++;
+	}
+	return (len);
+}
+
+int	ft_numlen(long long n, int base)
+{
+	int	len;
+
+	if (n == 0)
+		return (1);
+	len = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		len++;
+	}
+	while (n > 0)
+	{
+		n = n / base;
+		len++;
+	}
+	return (len);
 }
