@@ -58,24 +58,30 @@ char *ft_strjoin(char const *s1, char const *s2)
     return ((char *)ptr);
 }
 
-char *ft_strchr(const char *s, int c)
+size_t	ft_strlen(const char *s)
 {
-    int i;
-    char *p;
-    p = (char *)s;
+	size_t	i;
 
-    i = 0;
-    if (c == '\0')
-        return "\0";
-    while (s[i] != '\0')
-    {
-        if (s[i] == (char)c)
-        {
-            return (p + i);
-        }
-        i++;
-    }
-    return NULL;
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	*p;
+	size_t	i;
+
+	p = (char *)s;
+	if (c == 0)
+		return (p + ft_strlen(s));
+	i = 0;
+	while (s[i] != (char)c && s[i] != '\0')
+		i++;
+	if (s[i] == 0)
+		return (NULL);
+	return (p + i);
 }
 
 void create_line(t_line **ptrline, int fd)
@@ -83,11 +89,17 @@ void create_line(t_line **ptrline, int fd)
     // create line
     char *buff_content;
     int bytes_read;
-
-    while (!(ft_strchr((*ptrline)->content, '\n')))
+   
+    int prevlen;
+    
+    
+    while (!ft_strchr((char *)(*ptrline)->content , 10))    
     {
-
-        buff_content = malloc(BUFFER_SIZE + 1);
+        
+        printf("nlpos:%s\n", ft_strchr((*ptrline)->content , 10));
+        prevlen = ft_strlen((*ptrline)->content);
+        printf("prevlen:%d\n", prevlen);
+        buff_content = malloc((BUFFER_SIZE+prevlen + 1)*sizeof(char));
         if (!buff_content)
             return;
 
@@ -106,11 +118,15 @@ void create_line(t_line **ptrline, int fd)
             free(buff_content);
             return;
         }
-        else
-            buff_content[bytes_read] = '\0';
+        //else
+        //    buff_content[bytes_read] = '\0';
         // join
-        ft_strjoin((*ptrline)->content, buff_content);
+        printf("cnt_w:%s\n", buff_content);
+        //printf("temp:%s , endline:%d\n", (char *)(*ptrline)->content, ft_strchr((*ptrline)->content , '\n'));
+        (*ptrline)->content = ft_strjoin((*ptrline)->content, buff_content);
         printf("%s\n", (char *)(*ptrline)->content);
     }
+    
+   
     //(*ptrline)->content = buff_content;
 }

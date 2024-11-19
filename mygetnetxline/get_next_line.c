@@ -8,10 +8,11 @@ char *get_next_line(int fd)
     static t_line *headline;
 
     // create space for struct line
-
+    printf("inside_get_next: %d\n", fd);
     if (fd < 0 || BUFFER_SIZE < 0)
         return NULL;
 
+    //char *bf = malloc(BUFFER_SIZE*sizeof(char));
     headline = ft_newline("");
     create_line(&headline, fd);
 
@@ -20,9 +21,8 @@ char *get_next_line(int fd)
 
 int main()
 {
-    char *buff_content;
+    char *buff_content = NULL;
     int fd = open("test1.txt", O_RDWR);
-    printf("%d\n", fd);
     while (!buff_content)
     {
         buff_content = get_next_line(fd);

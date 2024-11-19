@@ -1,4 +1,5 @@
 #include "ft_printf.h"
+#include <stdio.h>
 
 int	main(void)
 {
@@ -12,3 +13,4 @@ int	main(void)
 	printf("fprint:%d vs rpprinnt:%d\n", r1, r2);
 
 }
+//cc ft_printf.c -I. -L. -lftprintf -o outmain.o
