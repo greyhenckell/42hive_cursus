@@ -12,8 +12,8 @@ char *get_next_line(int fd)
     if (fd < 0 || BUFFER_SIZE < 0)
         return NULL;
 
-    //char *bf = malloc(BUFFER_SIZE*sizeof(char));
-    headline = ft_newline("");
+    // char *bf = malloc(BUFFER_SIZE*sizeof(char));
+    headline = ft_newread("");
     create_line(&headline, fd);
 
     return headline->content;

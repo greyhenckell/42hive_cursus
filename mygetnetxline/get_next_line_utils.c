@@ -11,19 +11,6 @@ size_t ft_strlen(const char *s)
     return (i);
 }
 
-t_line *ft_newline(void *content)
-{
-    t_line *out;
-
-    out = NULL;
-    out = (t_line *)malloc(sizeof(t_line));
-    if (out == NULL)
-        return (NULL);
-    out->content = content;
-    out->next = NULL;
-    return (out);
-}
-
 size_t ft_strlcpy(char *dst, const char *src, size_t size)
 {
     size_t i;
@@ -58,30 +45,61 @@ char *ft_strjoin(char const *s1, char const *s2)
     return ((char *)ptr);
 }
 
-size_t	ft_strlen(const char *s)
+char *ft_strchr(const char *s, int c)
 {
-	size_t	i;
+    char *p;
+    size_t i;
 
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+    p = (char *)s;
+    if (c == 0)
+        return (p + ft_strlen(s));
+    i = 0;
+    while (s[i] != (char)c && s[i] != '\0')
+        i++;
+    if (s[i] == 0)
+        return (NULL);
+    return (p + i);
 }
 
-char	*ft_strchr(const char *s, int c)
+t_line *ft_newread(void *content)
 {
-	char	*p;
-	size_t	i;
+    t_line *out;
 
-	p = (char *)s;
-	if (c == 0)
-		return (p + ft_strlen(s));
-	i = 0;
-	while (s[i] != (char)c && s[i] != '\0')
-		i++;
-	if (s[i] == 0)
-		return (NULL);
-	return (p + i);
+    out = NULL;
+    out = (t_line *)malloc(sizeof(t_line));
+    if (out == NULL)
+        return (NULL);
+    out->content = content;
+    out->next = NULL;
+    return (out);
+}
+
+void ft_lstadd_back(t_line **lst, t_line *new)
+{
+    t_line *p;
+    p = *lst;
+    while (p->next != NULL)
+        p = p->next;
+
+    p->next = new;
+}
+void append_to_line(t_line **ptrline, char *content_read)
+{
+    t_line *newitem_read;
+    newitem_read = ft_newread(content_read);
+    ft_lstadd_back(ptrline, newitem_read);
+}
+
+int check_new_line(t_line **ptrline)
+{
+    static char *temp;
+    while ((*ptrline)->next != NULL)
+    {
+        temp = ft_strjoin(temp, (*ptrline)->content);
+        (*ptrline) = (*ptrline)->next;
+    }
+    printf("%s", temp);
+    return 0;
 }
 
 void create_line(t_line **ptrline, int fd)
@@ -89,44 +107,29 @@ void create_line(t_line **ptrline, int fd)
     // create line
     char *buff_content;
     int bytes_read;
-   
-    int prevlen;
-    
-    
-    while (!ft_strchr((char *)(*ptrline)->content , 10))    
+
+    while (check_new_line(ptrline) == 0)
     {
-        
-        printf("nlpos:%s\n", ft_strchr((*ptrline)->content , 10));
-        prevlen = ft_strlen((*ptrline)->content);
-        printf("prevlen:%d\n", prevlen);
-        buff_content = malloc((BUFFER_SIZE+prevlen + 1)*sizeof(char));
+
+        buff_content = malloc((BUFFER_SIZE + 1) * sizeof(char));
         if (!buff_content)
             return;
-
         bytes_read = read(fd, buff_content, BUFFER_SIZE);
-
-        // printf("%d bytes read\n", bytes_read);
         if (!bytes_read)
         {
-            // printf("nothing to read\n");
+            printf("nothing to read\n");
             free(buff_content);
             return;
         }
         else if (bytes_read == -1)
         {
-            // printf("error reading\n");
             free(buff_content);
             return;
         }
-        //else
-        //    buff_content[bytes_read] = '\0';
-        // join
-        printf("cnt_w:%s\n", buff_content);
-        //printf("temp:%s , endline:%d\n", (char *)(*ptrline)->content, ft_strchr((*ptrline)->content , '\n'));
-        (*ptrline)->content = ft_strjoin((*ptrline)->content, buff_content);
-        printf("%s\n", (char *)(*ptrline)->content);
+        else
+            buff_content[bytes_read] = '\0';
+        //  join
+        printf("appending_cnt:%s\n", buff_content);
+        append_to_line(ptrline, buff_content);
     }
-    
-   
-    //(*ptrline)->content = buff_content;
 }
