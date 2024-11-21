@@ -16,11 +16,12 @@ typedef struct s_line
 } t_line;
 
 t_line *ft_newread(void *content);
-void create_line(t_line **ptrline, int fd);
+void create_line(char **ptrline, int fd);
 char *ft_strchr(const char *s, int c);
 char *ft_strjoin(char const *s1, char const *s2);
 size_t ft_strlen(const char *s);
 size_t ft_strlcpy(char *dst, const char *src, size_t size);
 size_t ft_strlen(const char *s);
+void ft_lstadd_back(t_line **lst, t_line *new);
 
 #endif
