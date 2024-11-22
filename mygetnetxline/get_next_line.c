@@ -1,7 +1,6 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-// char 4bytes , default buffer_size = 1024
 void	create_line(char **ptrline, int fd)
 {
 	char	*temp;
@@ -17,7 +16,7 @@ void	create_line(char **ptrline, int fd)
 		if (!buff_content)
 			return ;
 		bytes_read = read(fd, buff_content, BUFFER_SIZE);
-		if (bytes_read<=0)
+		if (bytes_read <= 0)
 		{
 			free(buff_content);
 			free(*ptrline);
@@ -31,59 +30,47 @@ void	create_line(char **ptrline, int fd)
 		*ptrline = temp;
 	}
 }
+
+char	*allocate_line(char **headline)
+{
+	char	*temp;
+	char	*out;
+	size_t	rem_len;
+
+	rem_len = ft_strlen(ft_strchr(*headline, '\n') + 1);
+	out = malloc(((ft_strlen(*headline) - rem_len) + 1) * sizeof(char));
+	if (!out)
+		return (NULL);
+	ft_strlcpy(out, *headline, ft_strlen(*headline) - rem_len);
+	temp = malloc((rem_len + 1) * sizeof(char));
+	if (temp)
+		ft_strlcpy(temp, ft_strchr(*headline, '\n') + 1, rem_len + 1);
+	free(*headline);
+	*headline = temp;
+	return (out);
+}
 char	*get_next_line(int fd)
 {
 	static char	*headline;
 	char		*out;
 	char		*temp;
-	size_t		rem_len;
 
 	temp = NULL;
-	rem_len = 0;
 	out = NULL;
-
 	if (!headline)
 	{
 		headline = malloc(1);
 		headline[0] = '\0';
 	}
-	if(!headline)
+	if (!headline)
 		return (NULL);
-
-	// create space for struct line
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	//printf("--%s\n", headline);
-	create_line(&headline, fd);	
+	create_line(&headline, fd);
 	if (headline == 0)
 		return (NULL);
-	//   check if newline exists
 	if (ft_strchr(headline, '\n'))
-	{
-		rem_len = ft_strlen(ft_strchr(headline, '\n') + 1);
-		if (rem_len > 0)
-		{
-			out = malloc(((ft_strlen(headline) - rem_len) + 1) * sizeof(char));
-			if (!out)
-				return (NULL);
-			ft_strlcpy(out, headline, ft_strlen(headline) - rem_len);
-			temp = malloc((rem_len + 1) * sizeof(char));
-			if (temp)
-				ft_strlcpy(temp, ft_strchr(headline, '\n') + 1, rem_len + 1);
-			free(headline);
-			headline = temp;
-		}
-		else
-		{
-			out = malloc(((ft_strlen(headline) - rem_len) + 1) * sizeof(char));
-			if (!out)
-				return (NULL);
-			ft_strlcpy(out, headline, ft_strlen(headline) - rem_len);
-			free(headline);
-			headline = malloc(1);
-			headline[0] = '\0';
-		}
-	}
+		out = allocate_line(&headline);
 	return (out);
 }
 
@@ -99,7 +86,7 @@ int	main(void)
 		if (line)
 			free(line);
 		if (!line)
-			break;
+			break ;
 	}
 
 	close(fd);
