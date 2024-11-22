@@ -1,27 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/22 11:20:40 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/22 11:20:42 by fhenckel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
-#define GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 1024
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4096
+# endif
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
+# if BUFFER_SIZE > 10000000
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 4096
+# endif
 
-typedef struct s_line
-{
-    char *content;
-    struct s_line *next;
-} t_line;
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-t_line *ft_newread(void *content);
-void create_line(char **ptrline, int fd);
-char *ft_strchr(const char *s, int c);
-char *ft_strjoin(char const *s1, char const *s2);
-size_t ft_strlen(const char *s);
-size_t ft_strlcpy(char *dst, const char *src, size_t size);
-size_t ft_strlen(const char *s);
-void ft_lstadd_back(t_line **lst, t_line *new);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *s);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlen(const char *s);
 
 #endif
