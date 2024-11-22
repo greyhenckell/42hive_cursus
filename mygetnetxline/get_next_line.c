@@ -8,7 +8,6 @@ void	create_line(char **ptrline, int fd)
 	char	*buff_content;
 	int		bytes_read;
 
-	// create line
 	temp = NULL;
 	buff_content = NULL;
 	bytes_read = 0;
@@ -18,23 +17,14 @@ void	create_line(char **ptrline, int fd)
 		if (!buff_content)
 			return ;
 		bytes_read = read(fd, buff_content, BUFFER_SIZE);
-		if (!bytes_read)
+		if (bytes_read<=0)
 		{
-			//printf("nothing to read\n");
 			free(buff_content);
 			free(*ptrline);
 			*ptrline = NULL;
 			return ;
 		}
-		else if (bytes_read == -1)
-		{
-			free(buff_content);
-			return ;
-		}
-		else
-			buff_content[bytes_read] = '\0';
-		//  join
-		// free(temp);
+		buff_content[bytes_read] = '\0';
 		temp = ft_strjoin(*ptrline, buff_content);
 		free(*ptrline);
 		free(buff_content);
@@ -44,16 +34,16 @@ void	create_line(char **ptrline, int fd)
 char	*get_next_line(int fd)
 {
 	static char	*headline;
-	char		*out = NULL;
+	char		*out;
 	char		*temp;
 	size_t		rem_len;
 
 	temp = NULL;
 	rem_len = 0;
+	out = NULL;
 
 	if (!headline)
 	{
-		//printf("here\n");
 		headline = malloc(1);
 		headline[0] = '\0';
 	}
@@ -66,10 +56,7 @@ char	*get_next_line(int fd)
 	//printf("--%s\n", headline);
 	create_line(&headline, fd);	
 	if (headline == 0)
-	{
-		//free(headline);
 		return (NULL);
-	}
 	//   check if newline exists
 	if (ft_strchr(headline, '\n'))
 	{
