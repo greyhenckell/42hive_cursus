@@ -41,10 +41,10 @@ char	*allocate_line(char **headline)
 	out = malloc(((ft_strlen(*headline) - rem_len) + 1) * sizeof(char));
 	if (!out)
 		return (NULL);
-	ft_strlcpy(out, *headline, ft_strlen(*headline) - rem_len);
+	ft_strlcpy(out, *headline, ft_strlen(*headline) - rem_len+1);
 	temp = malloc((rem_len + 1) * sizeof(char));
 	if (temp)
-		ft_strlcpy(temp, ft_strchr(*headline, '\n') + 1, rem_len + 1);
+		ft_strlcpy(temp, ft_strchr(*headline, '\n') + 1, rem_len+1);
 	free(*headline);
 	*headline = temp;
 	return (out);
@@ -53,9 +53,7 @@ char	*get_next_line(int fd)
 {
 	static char	*headline;
 	char		*out;
-	char		*temp;
 
-	temp = NULL;
 	out = NULL;
 	if (!headline)
 	{
@@ -73,16 +71,15 @@ char	*get_next_line(int fd)
 		out = allocate_line(&headline);
 	return (out);
 }
-
 int	main(void)
 {
 	char *line;
-	int fd = open("test1.txt", O_RDWR);
+	int fd = open("no_nl.txt", O_RDWR);
 
 	while ((1))
 	{
 		line = get_next_line(fd);
-		printf("%s\n", line);
+		printf("->nl:%s", line);
 		if (line)
 			free(line);
 		if (!line)
