@@ -5,13 +5,17 @@ void create_line(char **ptrline, int fd, int *bytes_read)
 {
 	char *temp;
 	char *buff_content;
+	int bfz;
 
+	bfz = BUFFER_SIZE;
+	if (BUFFER_SIZE == 1)
+		bfz = DEFFAULT_BUFFER_SIZE;
 	while (*bytes_read > 0 && ft_strchr(*ptrline, '\n') == NULL)
 	{
-		buff_content = malloc((BUFFER_SIZE + 1));
+		buff_content = malloc((bfz + 1));
 		if (!buff_content)
 			return;
-		*bytes_read = read(fd, buff_content, BUFFER_SIZE);
+		*bytes_read = read(fd, buff_content, bfz);
 		if (*bytes_read == -1)
 		{
 			free(buff_content);
@@ -63,7 +67,6 @@ char *get_next_line(int fd)
 	char *out;
 	int bytes_read = 1;
 
-	out = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!headline)
@@ -86,22 +89,3 @@ char *get_next_line(int fd)
 		out = allocate_noline(&headline);
 	return (out);
 }
-/*
-int main(void)
-{
-	char *line;
-	int fd = open("test1.txt", O_RDWR);
-
-	while ((1))
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		if (line)
-			free(line);
-		if (!line)
-			break;
-	}
-
-	close(fd);
-	return (0);
-}*/
