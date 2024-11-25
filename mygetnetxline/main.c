@@ -17,7 +17,6 @@ int main(int argc, char **argv)
 		if (!line)
 			break;
 	}
-
 	close(fd);
 	return (0);
 }

@@ -1,22 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 14:16:27 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/24 14:16:30 by fhenckel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	create_line(char **ptrline, int fd, int *bytes_read)
 {
 	char	*temp;
 	char	*buff_content;
-
+	
 	while (*bytes_read > 0 && ft_strchr(*ptrline, '\n') == NULL)
 	{
 		buff_content = malloc((BUFFER_SIZE + 1));
@@ -58,6 +47,8 @@ char	*allocate_line(char **headline)
 	if (!temp)
 	{
 		free(out);
+		free(*headline);
+		*headline = NULL;
 		return (NULL);
 	}
 	free(*headline);
@@ -74,7 +65,6 @@ char	*allocate_noline(char **headline)
 	*headline = NULL;
 	return (out);
 }
-
 void	free_helper(char **headline)
 {
 	if (*headline)
@@ -84,36 +74,35 @@ void	free_helper(char **headline)
 			free(*headline);
 			*headline = NULL;
 		}
-		return;
+		return ;
 	}
 	free(*headline);
 	*headline = NULL;
-	return;
+	return ;
 }
-
 char	*get_next_line(int fd)
 {
-	static char	*headline;
+	static char	*headline[OPEN_MAX];
 	char		*out;
 	int			bytes_read;
 
 	bytes_read = 1;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
 		return (NULL);
-	if (!headline)
+	if (!headline[fd])
 	{
-		headline = malloc(1);
-		if (!headline)
+		headline[fd] = malloc(1);
+		if (!headline[fd])
 			return (NULL);
-		headline[0] = '\0';
+		headline[fd][0] = '\0';
 	}
-	create_line(&headline, fd, &bytes_read);
-	free_helper(&headline);
-	if(!headline)
+	create_line(&headline[fd], fd, &bytes_read);
+	free_helper(&headline[fd]);
+	if(!headline[fd])
 		return NULL;
-	if (ft_strchr(headline, '\n'))
-		out = allocate_line(&headline);
+	if (ft_strchr(headline[fd], '\n'))
+		out = allocate_line(&headline[fd]);
 	else
-		out = allocate_noline(&headline);
+		out = allocate_noline(&headline[fd]);
 	return (out);
 }
