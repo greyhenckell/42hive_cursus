@@ -1,0 +1,65 @@
+AppArmor : security module
+aptitude : auto solve dpd 
+apt : low level pkg mngt
+-----------------------------
+
+USER:
+> users
+> getent group user42
+> getent group sudo
+
+Create a new user:
+> sudo adduser "newuser"  ## passw pol : pawn pwQuality , ucredit,lcredit,dcredit
+                                , reject_username, difok=7 (diff chars not present last pw)
+                          ## passww pol : integrity user account + fullsystem
+Create a group:
+> sudo groupadd "evaluating"
+> sudo usermod -aG evaluating newuser
+                          
+-------------------------------------
+HostName and Partitions
+
+hostname:
+> hostname
+Modify hostname:
+> hostnamectl set-hostname "newhost" +  /etc/host(file) + reboot
+view partitons:
+> lsblk
+
+---------------------------------------------
+SUDO
+
+sudo installed:
+> dpkg -s sudo
+assign evaluator to sudo
+> sudo usermod -aG sudo newuser
+show somthing with sudo:
+> getent group sudo  +  sudo visudo (sudoers) file restrictions
+sudo log:
+> ls /var/log/sudo  +  sudo touch test  + cat sudo.log
+
+---------------------------------------------
+UFW
+
+ufw installed:
+>dpkg -s ufw
+status:
+>sudo service ufw status 
+list:
+> sudo ufw status numbered
+add new 8080
+> sudo ufw allow 8080  + numbered + ufw delete [#]
+
+----------------------------------------------
+SSH
+
+installed:
+> dpkg -s ssh
+status:
+> sudo service ssh status
+
+----------------------------------------------
+Script MOnitor
+
+crontad edit:
+> sudo  crontab -u root -e
