@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int	count_items(char const *str, char delim)
 {
@@ -33,11 +34,12 @@ int	count_items(char const *str, char delim)
 	return (cntword);
 }
 
-static void	release_items(char **out, int idx)
+static void	check_allocation(char **out, int size, int idx)
 {
+	out[idx] = (char *)malloc((size + 1) * sizeof(char));
 	if (out[idx] == NULL)
 	{
-		while (idx-- > 0)
+		while (idx-- >= 0)
 			free(out[idx]);
 		free(out);
 	}
@@ -61,8 +63,9 @@ static void	allocate_items(char **out, char const *s, char c)
 			end++;
 		if (end > start)
 		{
-			out[idx] = (char *)malloc((end - start + 1) * sizeof(char));
-			release_items(out, idx);
+			check_allocation(out, end - start, idx);
+			if (!out)
+				return ;
 			ft_strlcpy(out[idx], s + start, end - start + 1);
 			idx++;
 		}
@@ -77,18 +80,15 @@ char	**ft_split(char const *s, char c)
 	int		array_size;
 
 	out = NULL;
-	if (c == '\0')
-		array_size = 0;
+	if (c == '\0' && s)
+		array_size = 1;
 	else
 		array_size = count_items(s, c);
 	out = (char **)malloc((array_size + 1) * sizeof(char *));
 	if (out == NULL)
 		return (NULL);
-	if (!array_size)
-	{
-		out[0] = NULL;
-		return (out);
-	}
 	allocate_items(out, s, c);
+	if (!out)
+		return (NULL);
 	return (out);
 }
