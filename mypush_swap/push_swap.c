@@ -1,45 +1,67 @@
 #include <stdio.h>
 #include "libft/libft.h"
 
-void check_sa(int *ptr, int i)
+void check_sa(int *ptr, int i, int *flag)
 {
     int temp;
-    int i=0;
-    if (ptr[i] > ptr[i+1])
+    if (ptr[i + 1])
     {
-        temp = ptr[i];
-        ptr[i] = ptr[i+1];
-        ptr[i+1] = temp;
+        // printf("%d vs %d\n", ptr[i], ptr[i + 1]);
+        if (ptr[i] > ptr[i + 1])
+        {
+            printf("sa\n");
+            *flag = 1;
+            temp = ptr[i];
+            ptr[i] = ptr[i + 1];
+            ptr[i + 1] = temp;
+        }
     }
+}
 
-void create_nodes(int items ,char **stack)
+void print_array(int *table, int items)
+{
+    int i = 0;
+    while (i < items)
+    {
+        printf("--%d\n", table[i]);
+        i++;
+    }
+}
+
+void run_algo(int *table, int items)
+{
+    int col = 0;
+    int flag = 0;
+    while (col < items)
+    {
+        check_sa(table, col, &flag);
+        // printf("--%d\n", table[col]);
+        col++;
+    }
+    if (flag)
+        run_algo(table, items);
+}
+void create_nodes(int items, char **stack)
 {
     int i = 1;
-    int idx = 0 ;
+    int idx = 0;
     int temp;
 
     int table[items];
-    //int table2[items];
-    
+    // int table2[items];
+
     while (stack[i] != NULL)
     {
-        
         temp = ft_atoi(stack[i]);
-        printf("creating node for %d\n", temp);
-        table[idx] = temp;        
+        // printf("creating node for %d\n", temp);
+        table[idx] = temp;
         i++;
         idx++;
     }
-    check_sa(table);
-    //int row = 0;
-    /*int col = 0;
-  
-    while(col < items)
-    {
-            //printf("%d %d %d\n", row, col, items);
-            printf("--%d\n", table[col]);
-            col++;
-    }*/
+
+    run_algo(table, items);
+
+    print_array(table, items);
 }
 
 int main(int argc, char **argv)
@@ -48,7 +70,7 @@ int main(int argc, char **argv)
         if (argc == 2)
             printf("check to split\n");
         else
-            create_nodes(argc-1, argv);
+            create_nodes(argc - 1, argv);
     else
     {
         printf("Error\n");
