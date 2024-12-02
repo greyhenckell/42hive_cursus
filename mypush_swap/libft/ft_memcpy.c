@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/08 12:28:00 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/28 15:51:36 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/10/31 12:57:18 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+#include "libft.h"
 
-#include <limits.h>
-#include <stdlib.h>
-#include <unistd.h>
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	char	*psrc;
+	char	*pdest;
+	int		i;
 
-char *ft_strchr(const char *s, int c);
-size_t ft_strlen(const char *s);
-int ft_putnbr_base(long long n, int base, int c);
-int ft_unsigned_numlen(unsigned long n, int base);
-int ft_numlen(long long n, int base);
-int ft_putchar(char c);
-int ft_printf(const char *fmt, ...);
-
-#endif
+	if (dest == NULL && src == NULL && n > 0)
+		return (NULL);
+	psrc = (char *)src;
+	pdest = (char *)dest;
+	i = 0;
+	while (i < (int)n)
+	{
+		pdest[i] = psrc[i];
+		i++;
+	}
+	return (dest);
+}

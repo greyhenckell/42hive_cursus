@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/08 12:28:00 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/11/05 11:56:32 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/05 11:56:42 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+void	ft_putnbr_fd(int n, int fd)
+{
+	char	out;
 
-#include <limits.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-char *ft_strchr(const char *s, int c);
-size_t ft_strlen(const char *s);
-int ft_putnbr_base(long long n, int base, int c);
-int ft_unsigned_numlen(unsigned long n, int base);
-int ft_numlen(long long n, int base);
-int ft_putchar(char c);
-int ft_printf(const char *fmt, ...);
-
-#endif
+	if (n == INT_MIN)
+	{
+		write(fd, "-2147483648", 11);
+		return ;
+	}
+	if (n < 0)
+	{
+		n = n * -1;
+		write(fd, "-", 1);
+	}
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	out = (n % 10) + '0';
+	write(fd, &out, 1);
+}

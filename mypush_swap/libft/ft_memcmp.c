@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/08 12:28:00 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/10/29 10:38:08 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/01 16:43:39 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+#include "libft.h"
 
-#include <limits.h>
-#include <stdlib.h>
-#include <unistd.h>
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	unsigned char	*ps1;
+	unsigned char	*ps2;
+	size_t			i;
 
-char *ft_strchr(const char *s, int c);
-size_t ft_strlen(const char *s);
-int ft_putnbr_base(long long n, int base, int c);
-int ft_unsigned_numlen(unsigned long n, int base);
-int ft_numlen(long long n, int base);
-int ft_putchar(char c);
-int ft_printf(const char *fmt, ...);
-
-#endif
+	if (n == 0)
+		return (0);
+	ps1 = (unsigned char *)s1;
+	ps2 = (unsigned char *)s2;
+	i = 0;
+	while (i < n)
+	{
+		if (ps1[i] != ps2[i])
+			return (ps1[i] - ps2[i]);
+		i++;
+	}
+	return (0);
+}

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/08 12:28:00 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/11/08 09:37:42 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/08 09:37:46 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+{
+	int	i;
 
-#include <limits.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-char *ft_strchr(const char *s, int c);
-size_t ft_strlen(const char *s);
-int ft_putnbr_base(long long n, int base, int c);
-int ft_unsigned_numlen(unsigned long n, int base);
-int ft_numlen(long long n, int base);
-int ft_putchar(char c);
-int ft_printf(const char *fmt, ...);
-
-#endif
+	i = 0;
+	while (s[i] != '\0')
+	{
+		(*f)(i, &s[i]);
+		i++;
+	}
+}

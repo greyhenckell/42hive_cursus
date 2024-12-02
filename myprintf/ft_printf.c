@@ -16,50 +16,50 @@
 
 // cc ft_printf.c -I. -L. -lftprintf -o outmain.o
 
-static int	check_pointer(va_list p, char c)
+static int check_pointer(va_list p, char c)
 {
-	int		count;
-	void	*str;
+	int count;
+	void *str;
 
 	if (c == 's')
 	{
 		str = (char *)va_arg(p, char *);
 		if (!str)
 			str = "(null)";
-		count = ft_strlen(str);
-		write(1, str, count);
+		count = write(1, str, ft_strlen(str));
 	}
 	if (c == 'p')
 	{
 		str = (void *)va_arg(p, void *);
 		if (!str)
 		{
-			str = "(nil)";
-			write(1, str, ft_strlen(str));
-			return (ft_strlen(str));
+			count = write(1, "(nil)", ft_strlen("(nil)"));
+			return (count);
 		}
-		write(1, "0x", 2);
-		ft_putnbr_base((unsigned long)str, 16, 97);
-		count = ft_unsigned_numlen((unsigned long)str, 16) + 2;
+		count = write(1, "0x", 2);
+		if (ft_putnbr_base((unsigned long)str, 16, 'a') == -1)
+			return (-1);
+		count += ft_unsigned_numlen((unsigned long)str, 16);
 	}
 	return (count);
 }
 
-static int	check_type(va_list p, char c)
+static int check_type(va_list p, char c)
 {
-	int	count;
-	int	val;
+	int count;
+	int val;
 
-	count = 1;
+	// count = 1;
 	if (c == 'c')
 	{
 		val = (int)va_arg(p, int);
-		write(1, &val, 1);
+		count = write(1, &val, 1);
 	}
 	if (c == 'd' || c == 'i')
 	{
 		val = (int)va_arg(p, int);
-		ft_putnbr_base(val, 10, 0);
+		if (ft_putnbr_base(val, 10, 0) == -1)
+			return (-1);
 		count = ft_numlen(val, 10);
 	}
 	if (c == 's')
@@ -67,15 +67,15 @@ static int	check_type(va_list p, char c)
 	if (c == '%')
 	{
 		val = '%';
-		write(1, &val, 1);
+		count = write(1, &val, 1);
 	}
 	return (count);
 }
 
-static int	check_type_unsigned(va_list p, char c)
+static int check_type_unsigned(va_list p, char c)
 {
-	int				count;
-	unsigned int	val;
+	int count;
+	unsigned int val;
 
 	count = 0;
 	if (c == 'u' || c == 'x' || c == 'X')
@@ -83,12 +83,13 @@ static int	check_type_unsigned(va_list p, char c)
 		val = (unsigned int)va_arg(p, unsigned int);
 		count = ft_unsigned_numlen(val, 16);
 		if (c == 'x')
-			ft_putnbr_base(val, 16, 97);
+			ft_putnbr_base(val, 16, 'a');
 		else if (c == 'X')
-			ft_putnbr_base(val, 16, 65);
+			ft_putnbr_base(val, 16, 'A');
 		else
 		{
-			ft_putnbr_base(val, 10, 0);
+			if (ft_putnbr_base(val, 10, 0) == -1)
+				return -1;
 			count = ft_numlen(val, 10);
 		}
 	}
@@ -97,11 +98,11 @@ static int	check_type_unsigned(va_list p, char c)
 	return (count);
 }
 
-int	ft_printf(const char *fmt, ...)
+int ft_printf(const char *fmt, ...)
 {
-	va_list	arg_ptr;
-	int		len;
-	int		start;
+	va_list arg_ptr;
+	int len;
+	int start;
 
 	va_start(arg_ptr, fmt);
 	len = 0;
@@ -117,7 +118,8 @@ int	ft_printf(const char *fmt, ...)
 		}
 		else
 		{
-			ft_putchar(fmt[start]);
+			if (ft_putchar(fmt[start]) == -1)
+				return (-1);
 			len++;
 		}
 		start++;

@@ -12,14 +12,20 @@
 
 #include "ft_printf.h"
 
-void	ft_putnbr_base(long long n, int base, int c)
+int ft_putnbr_base(long long n, int base, int c)
 {
-	char				out;
-	unsigned long long	temp;
+	int count;
+	int tmp_count;
+	char out;
+	unsigned long long temp;
+
+	count = 0;
 
 	if (n < 0 && base == 10)
 	{
-		write(1, "-", 1);
+		count = write(1, "-", 1);
+		if (count == -1)
+			return (-1);
 		temp = (unsigned long long)(-n);
 	}
 	else
@@ -30,17 +36,24 @@ void	ft_putnbr_base(long long n, int base, int c)
 		out = c + (temp % base) - 10;
 	else
 		out = (temp % base) + 48;
-	write(1, &out, 1);
+	tmp_count = write(1, &out, 1);
+	if (tmp_count == -1)
+		return -1;
+	count += tmp_count;
+	return (count);
 }
 
-void	ft_putchar(char c)
+int ft_putchar(char c)
 {
-	write(1, &c, sizeof(c));
+	int count;
+
+	count = write(1, &c, sizeof(c));
+	return count;
 }
 
-size_t	ft_strlen(const char *s)
+size_t ft_strlen(const char *s)
 {
-	size_t	i;
+	size_t i;
 
 	i = 0;
 	while (s[i] != '\0')
@@ -48,10 +61,10 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char *ft_strchr(const char *s, int c)
 {
-	char	*p;
-	size_t	i;
+	char *p;
+	size_t i;
 
 	p = (char *)s;
 	if (c == 0)

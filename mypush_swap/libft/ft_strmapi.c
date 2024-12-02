@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhenckel <fhenckel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 11:29:51 by fhenckel          #+#    #+#             */
-/*   Updated: 2024/11/08 12:28:00 by fhenckel         ###   ########.fr       */
+/*   Created: 2024/11/06 15:37:22 by fhenckel          #+#    #+#             */
+/*   Updated: 2024/11/06 15:45:56 by fhenckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+#include "libft.h"
 
-#include <limits.h>
-#include <stdlib.h>
-#include <unistd.h>
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char	*out;
+	int		i;
 
-char *ft_strchr(const char *s, int c);
-size_t ft_strlen(const char *s);
-int ft_putnbr_base(long long n, int base, int c);
-int ft_unsigned_numlen(unsigned long n, int base);
-int ft_numlen(long long n, int base);
-int ft_putchar(char c);
-int ft_printf(const char *fmt, ...);
-
-#endif
+	i = 0;
+	out = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (out == NULL)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		out[i] = (*f)(i, s[i]);
+		i++;
+	}
+	out[i] = '\0';
+	return (out);
+}
