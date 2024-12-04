@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "libft/libft.h"
+#include "push_swap.h"
 
 void check_sa(int *ptr, int i, int *flag)
 {
@@ -23,7 +24,7 @@ void print_array(int *table, int items)
     int i = 0;
     while (i < items)
     {
-        printf("--%d\n", table[i]);
+        printf("--%d\n", (table[i]));
         i++;
     }
 }
@@ -41,27 +42,43 @@ void run_algo(int *table, int items)
     if (flag)
         run_algo(table, items);
 }
-void create_nodes(int items, char **stack)
+
+//run_algo(table, items);
+//print_array(table, items);
+//run from begining until pos
+// check if exists > 1
+int check_duplicate(char **str, int input_len)
 {
-    int i = 1;
+    // ["2", "30", "40"]
+    int temp[input_len];
+    int item;
+
+    //lst = (int **)malloc(sizeof(int *) * input_len);
+
+    int  i = 1;
     int idx = 0;
-    int temp;
-
-    int table[items];
-    // int table2[items];
-
-    while (stack[i] != NULL)
+    while(i < input_len)
     {
-        temp = ft_atoi(stack[i]);
-        // printf("creating node for %d\n", temp);
-        table[idx] = temp;
+        //printf("parsing:%s\n", str[i]);
+        if (contain_digit(str[i]))
+        {
+            item = ft_atoi(str[i]);
+            //printf("%d\n", item);
+            if( check_item(temp, item) == 0)
+            {
+                temp[idx] = item;
+                idx++;
+            }
+        }  
+        else
+            return 0;
         i++;
-        idx++;
     }
-
-    run_algo(table, items);
-
-    print_array(table, items);
+    //here is my stack :TEMP
+    //printf("%d\n", idx);
+    run_algo(temp, idx);
+    print_array(temp, idx);
+    return (1);
 }
 
 int main(int argc, char **argv)
@@ -70,7 +87,13 @@ int main(int argc, char **argv)
         if (argc == 2)
             printf("check to split\n");
         else
-            create_nodes(argc - 1, argv);
+        {
+            if (!check_duplicate(argv, argc))
+            {
+                printf("error\n");
+                return (1);
+            }            
+        }
     else
     {
         printf("Error\n");
