@@ -2,18 +2,6 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-void print_array(int *table, int items)
-{
-	int i;
-
-	i = 0;
-	while (i < items)
-	{
-		printf("--%d\n", (table[i]));
-		i++;
-	}
-}
-
 void print_queue(Queue *table)
 {
 	Node *current_item;
@@ -26,39 +14,34 @@ void print_queue(Queue *table)
 	}
 }
 
-int peek_is_max(int *table, int items)
+void run_algo(Queue *stack_a, Queue *stack_b)
 {
-	int col;
-	col = 1;
-	while (col < items && table[0] > table[col])
-		col++;
-	if (col == items)
-		return (1);
-	return (0);
-}
-
-void run_algo(int *table, int *stack_b, int items)
-{
-	// int stack_b[items];
-	// int idx_b = items;
-	int i = 0;
-	if (peek_is_max(table, items) && items > 2)
-	{
-		printf("ra\n");
-		check_rotate(table, items);
-		run_algo(table, stack_b, items - 1);
-	}
+	if (queue_is_sorted(stack_a, 0) && queue_is_empty(stack_b))
+		return;
 	else
 	{
-		printf("no max %d\n", table[0]);
-		if (table[i] < table[i + 1])
-			check_push(stack_b, items, table[i]);
+		if (peek_is_max(stack_a))
+			queue_rotate(stack_a);
 		else
 		{
-			printf("swap\n");
-			check_swap(table);
-			check_push(stack_b, items, table[i]);
-			// run_algo(table, stack_b, items);
+			if (queue_is_empty(stack_b) || (queue_is_sorted(stack_b, 1) && stack_b->size == 2) || get_peak(stack_a) > get_peak(stack_b))
+			{
+				queue_push(stack_a, stack_b);
+				run_algo(stack_a, stack_b);
+			}
+			else
+			{
+				printf("no empty\n");
+				/*if (stack_a->size == 3 && queue_is_sorted(stack_a, 0))
+				{
+					queue_push(stack_b, stack_a);
+				}
+				else
+				{
+					queue_swap(stack_a);
+					run_algo(stack_a, stack_b);
+				}*/
+			}
 		}
 	}
 }
@@ -87,9 +70,11 @@ int check_duplicate(char **str, int input_len)
 		i++;
 	}
 
-	// queue_rotate(queue_A);
-	printf("--QA--\n");
+	run_algo(queue_A, queue_B);
+
 	print_queue(queue_A);
+	printf("------------\n");
+	print_queue(queue_B);
 	/*queue_push(queue_A, queue_B);
 	// printf("size:%d\n", queue_A->size);
 	printf("--QA--\n");

@@ -7,6 +7,7 @@ typedef struct Node_s
 {
     int value;
     struct Node_s *next;
+    struct Node_s *prev;
 } Node;
 
 typedef struct
@@ -29,5 +30,8 @@ Queue *create_queue();
 int queue_is_empty(Queue *queue);
 void enqueue(Queue *queue, int value);
 int check_item_queue(Queue *table, int item);
+int queue_is_sorted(Queue *stack, int reverse);
+int get_peak(Queue *stack);
+int peek_is_max(Queue *stack);
 
 #endif
