@@ -37,7 +37,7 @@ $(SUBDIR):
 	@echo "files Compiled .o generated"
 
 clean:
-	@rm -rf ${OBJS} $(NAME)
+	rm -rf ${OBJS} $(NAME)
 	$(MAKE) -C $(SUBDIR) clean
 	@echo "Cleaned up generated files"
 
