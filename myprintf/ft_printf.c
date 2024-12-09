@@ -98,6 +98,7 @@ static int check_type_unsigned(va_list p, char c)
 	return (count);
 }
 
+
 int ft_printf(const char *fmt, ...)
 {
 	va_list arg_ptr;
@@ -105,8 +106,8 @@ int ft_printf(const char *fmt, ...)
 	int start;
 
 	va_start(arg_ptr, fmt);
-	len = 0;
 	start = 0;
+	len = 0;
 	while (fmt[start] != '\0')
 	{
 		if ((fmt[start] == '%') && ft_strchr("%csdipuxX", fmt[start + 1]))
@@ -116,7 +117,7 @@ int ft_printf(const char *fmt, ...)
 			else
 				len += check_type_unsigned(arg_ptr, fmt[++start]);
 		}
-		else
+		else 
 		{
 			if (ft_putchar(fmt[start]) == -1)
 				return (-1);

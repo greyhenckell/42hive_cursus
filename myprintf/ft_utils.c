@@ -20,7 +20,6 @@ int ft_putnbr_base(long long n, int base, int c)
 	unsigned long long temp;
 
 	count = 0;
-
 	if (n < 0 && base == 10)
 	{
 		count = write(1, "-", 1);
@@ -36,9 +35,8 @@ int ft_putnbr_base(long long n, int base, int c)
 		out = c + (temp % base) - 10;
 	else
 		out = (temp % base) + 48;
-	tmp_count = write(1, &out, 1);
-	if (tmp_count == -1)
-		return -1;
+	if ((tmp_count = write(1, &out, 1)) == -1)
+		return (-1);
 	count += tmp_count;
 	return (count);
 }
