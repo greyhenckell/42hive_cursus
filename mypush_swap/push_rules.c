@@ -1,18 +1,40 @@
 #include <stdio.h>
 
-void check_sa(int *ptr, int i, int *flag)
+void check_swap(int *ptr)
 {
     int temp;
-    if (ptr[i + 1])
+    if (ptr[1])
     {
-        // printf("%d vs %d\n", ptr[i], ptr[i + 1]);
-        if (ptr[i] > ptr[i + 1])
-        {
-            printf("sa\n");
-            *flag = 1;
-            temp = ptr[i];
-            ptr[i] = ptr[i + 1];
-            ptr[i + 1] = temp;
-        }
+        temp = ptr[0];
+        ptr[0] = ptr[1];
+        ptr[1] = temp;        
     }
+}
+
+void check_push(int *stack, int items, int value)
+{
+    int i;
+
+    i = 0;
+    while(i < items && stack[i] != '\0')
+    {
+        stack[i] = 0;
+        i++;
+    }
+    stack[i] = value;
+}
+
+void check_rotate(int *stack, int items)
+{
+    int i;
+
+
+    i = 0;
+    int first_item = stack[i];
+    while( i< items && stack[i+1])
+    {
+        stack[i] = stack[i+1];
+        i++;
+    }
+    stack[i] = first_item;
 }

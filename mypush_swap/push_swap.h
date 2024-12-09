@@ -3,7 +3,8 @@
 
 int contain_digit(char *str);
 int check_item(int *table, int item);
-void check_sa(int *ptr, int i, int *flag);
-
+void check_swap(int *ptr);
+void check_rotate(int *stack, int items);
+void check_push(int *stack, int items, int value);
 
 #endif

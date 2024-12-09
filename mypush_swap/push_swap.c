@@ -14,51 +14,59 @@ void	print_array(int *table, int items)
 	}
 }
 
-void	run_algo(int *table, int items)
+int peek_is_max(int *table, int items)
 {
 	int	col;
-
 	col = 1;
-	// int flag = 0;
-	// checking max:
 	while (col < items && table[0] > table[col])
-	{
-		// check_sa(table, col, &flag);
-		// printf("--%d\n", table[col]);
 		col++;
-	}
 	if (col == items)
-	    printf("%d is max", table[0]);
-	else 
-        printf("no max\n");
-	// if (flag)
-	//    run_algo(table, items);
+		return (1);
+	return (0);
 }
-// 30 10 20 5
-// 10 30 20 5
-// check if my peek is max
-// run_algo(table, items);
-// print_array(table, items);
-// run from begining until pos
-// check if exists > 1
+
+void	run_algo(int *table, int *stack_b, int items)
+{
+	//int stack_b[items];
+	//int idx_b = items;
+	int i = 0;
+	if (peek_is_max(table, items) && items > 2)
+	{
+		printf("ra\n");
+		check_rotate(table, items);
+		run_algo(table, stack_b, items-1);
+	}
+	else
+	{
+        printf("no max %d\n", table[0]);
+		if (table[i] < table[i+1])
+			check_push(stack_b, items, table[i]);
+		else
+		{
+				printf("swap\n");
+				check_swap(table);
+				check_push(stack_b, items, table[i]);
+				//run_algo(table, stack_b, items);
+		}	
+	}
+	
+}
+
 int	check_duplicate(char **str, int input_len)
 {
 	int	temp[input_len];
+	int temp_b[input_len];
 	int	item;
 	int	i;
 	int	idx;
 
-	// ["2", "30", "40"]
-	// lst = (int **)malloc(sizeof(int *) * input_len);
 	i = 1;
 	idx = 0;
 	while (i < input_len)
 	{
-		// printf("parsing:%s\n", str[i]);
 		if (contain_digit(str[i]))
 		{
 			item = ft_atoi(str[i]);
-			// printf("%d\n", item);
 			if (check_item(temp, item) == 0)
 			{
 				temp[idx] = item;
@@ -70,9 +78,11 @@ int	check_duplicate(char **str, int input_len)
 		i++;
 	}
 	// here is my stack :TEMP
-	// printf("%d\n", idx);
-	run_algo(temp, idx);
-	// print_array(temp, idx);
+	// idx : number of uniques values
+	run_algo(temp, temp_b, idx);
+	print_array(temp, idx);
+	printf("----------\n");
+	print_array(temp_b, idx);
 	return (1);
 }
 
