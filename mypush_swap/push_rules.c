@@ -1,40 +1,38 @@
-#include <stdio.h>
+#include "push_swap.h"
 
-void check_swap(int *ptr)
+void queue_rotate(Queue *stack)
 {
-    int temp;
-    if (ptr[1])
-    {
-        temp = ptr[0];
-        ptr[0] = ptr[1];
-        ptr[1] = temp;        
-    }
+    if (queue_is_empty(stack))
+        return;
+    Node *nodetemp = stack->head;
+    stack->head = stack->head->next;
+    nodetemp->next = NULL;
+
+    stack->tail->next = nodetemp;
+    stack->tail = nodetemp;
 }
 
-void check_push(int *stack, int items, int value)
+void queue_push(Queue *origin, Queue *dest)
 {
-    int i;
+    if (queue_is_empty(origin))
+        return;
+    Node *nodetemp = origin->head;
+    enqueue(dest, nodetemp->value);
 
-    i = 0;
-    while(i < items && stack[i] != '\0')
-    {
-        stack[i] = 0;
-        i++;
-    }
-    stack[i] = value;
+    origin->head = origin->head->next;
+    free(nodetemp);
+    origin->size--;
 }
 
-void check_rotate(int *stack, int items)
+void queue_swap(Queue *stack)
 {
-    int i;
+    if (queue_is_empty(stack) || stack->head->next == NULL)
+        return;
+    Node *firstNode = stack->head;
+    Node *secondNode = stack->head->next;
 
+    firstNode->next = secondNode->next;
+    secondNode->next = firstNode;
 
-    i = 0;
-    int first_item = stack[i];
-    while( i< items && stack[i+1])
-    {
-        stack[i] = stack[i+1];
-        i++;
-    }
-    stack[i] = first_item;
+    stack->head = secondNode;
 }
