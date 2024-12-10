@@ -23,6 +23,7 @@ int contain_digit(char *str);
 void queue_swap(Queue *stack);
 void queue_rotate(Queue *stack);
 void queue_push(Queue *origin, Queue *dest);
+void queue_reverse_rotate(Queue *stack);
 
 // utils
 Node *new_node(int value);

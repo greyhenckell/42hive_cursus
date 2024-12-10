@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
+
 
 static int	integer_length(int n)
 {
@@ -34,70 +36,38 @@ static int	integer_length(int n)
 	return (len);
 }
 
-static void	ft_putnbr(int n, char *out)
+int num_abs(int n)
 {
-	int	mod;
-	int	idx;
-	int	sign;
-
-	idx = 0;
-	sign = 0;
-	if (n == INT_MIN)
-	{
-		ft_strlcpy(out, "8463847412-", 12);
-		return ;
-	}
-	if (n < 0)
-	{
-		sign = 1;
-		n *= -1;
-	}
-	while (n > 0)
-	{
-		mod = n % 10;
-		n = n / 10;
-		out[idx++] = mod + 48;
-	}
-	if (sign)
-		out[idx++] = '-';
-	out[idx++] = '\0';
-}
-
-static void	reverse_string(char *out)
-{
-	unsigned int	start;
-	unsigned int	end;
-	char			temp;
-
-	start = 0;
-	end = ft_strlen(out) - 1;
-	while (start < end)
-	{
-		temp = out[start];
-		out[start] = out[end];
-		out[end] = temp;
-		start++;
-		end--;
-	}
+	if (n<0)
+		return (-n);
+	return (n);
 }
 
 char	*ft_itoa(int n)
 {
 	char	*out;
 	int		size;
+	int		i;
 
+	i = 0;
 	size = integer_length(n);
+	//printf("%d %d\n", size, n);
 	out = (char *)malloc((size + 1) * sizeof(char));
 	if (out == NULL)
 		return (NULL);
-	ft_memset(out, 0, size);
-	if (n * (-1) == 0)
-	{
+	out[size] = '\0';
+	if (n == 0)
 		out[0] = '0';
-		out[1] = '\0';
-		return (out);
+	if (n < 0)
+	{
+		out[0] = '-';
+		i++;
 	}
-	ft_putnbr(n, out);
-	reverse_string(out);
+	while(size -1 >= i)
+	{
+		out[size-1] = num_abs(n %10) +'0';
+		n = n / 10;		
+		size--;
+	}	
 	return (out);
 }
