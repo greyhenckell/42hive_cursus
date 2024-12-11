@@ -22,6 +22,7 @@ void queue_push(Queue *origin, Queue *dest)
     origin->head = origin->head->next;
     free(nodetemp);
     origin->size--;
+    queue_reverse_rotate(dest);
 }
 
 void queue_swap(Queue *stack)

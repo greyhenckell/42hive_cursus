@@ -14,42 +14,57 @@ void	print_queue(Queue *table)
 	}
 }
 
+void push_position(Queue *stack_a ,Queue *stack_b)
+{
+	if (queue_is_empty(stack_b))
+		queue_push(stack_a, stack_b);
+	else
+	{
+		//if( stack_b->size>1 && queue_is_sorted(stack_b,1))
+		//	return;
+
+		if(get_peak(stack_a) > get_peak(stack_b))
+			queue_push(stack_a,stack_b);
+		else
+		{
+			queue_push(stack_a,stack_b);
+			queue_rotate(stack_b);
+		}
+	}
+}
+
 void	run_algo(Queue *stack_a, Queue *stack_b)
 {
+
 	if (queue_is_sorted(stack_a, 0) && queue_is_empty(stack_b))
 		return ;
 	else
 	{
-		
-		if (peek_is_max(stack_a))
+		//printf("--%d\n", stack_a->size);
+		/*if(stack_a->size <= 3)
+		{
+			return;
+		}*/
+		if (peek_is_max(stack_a) > peek_is_max(stack_b) )
 		{
 			queue_rotate(stack_a);
-			run_algo(stack_a, stack_b);
+			//run_algo(stack_a, stack_b);
+		}
+		if (is_tail_min(stack_a))
+		{
+			queue_reverse_rotate(stack_a);						
+		}
+		if(get_peak(stack_a) < stack_a->head->next->value )
+		{
+			queue_swap(stack_a);
 		}
 		else
 		{
-			queue_push(stack_a, stack_b);
-			if(stack_b->size >= 2)
-			{
-				if (!queue_is_sorted(stack_b,1))
-				{
-					queue_swap(stack_b);					
-				}
-				else
-				{
-					if(queue_is_sorted(stack_a,0))
-						queue_push(stack_b, stack_a);
-				}
-			}
-			if (!queue_is_sorted(stack_a,0))
-			{
-				queue_push(stack_a, stack_b);				
-			}
-			//queue_reverse_rotate(stack_a);
-						
+			
+			push_position(stack_a ,stack_b);
 		}
 	}
-	run_algo(stack_a, stack_b);
+	//run_algo(stack_a, stack_b);
 }
 
 int	check_duplicate(char **str, int input_len)
@@ -75,11 +90,58 @@ int	check_duplicate(char **str, int input_len)
 			return (0);
 		i++;
 	}
+	//
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("-----next_iter----\n");
 	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
 	print_queue(queue_A);
 	printf("--QB--\n");
 	print_queue(queue_B);
-	//queue_reverse_rotate(queue_A);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+
 	
 	/*queue_push(queue_A, queue_B);
 	// printf("size:%d\n", queue_A->size);
