@@ -28,13 +28,12 @@ void queue_swap(Queue *stack)
 {
     if (queue_is_empty(stack) || stack->head->next == NULL)
         return;
-    Node *firstNode = stack->head;
-    Node *secondNode = stack->head->next;
+    
+    int temp;
 
-    firstNode->next = secondNode->next;
-    secondNode->next = firstNode;
-
-    stack->head = secondNode;
+    temp = stack->head->value;
+    stack->head->value = stack->head->next->value;
+    stack->head->next->value = temp;
 }
 void queue_reverse_rotate(Queue *stack)
 {
