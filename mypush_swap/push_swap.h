@@ -35,5 +35,6 @@ int queue_is_sorted(Queue *stack, int reverse);
 int get_peak(Queue *stack);
 int peek_is_max(Queue *stack);
 int is_tail_min(Queue *stack);
+int peek_is_min(Node *peakNode);
 
 #endif

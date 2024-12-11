@@ -15,6 +15,8 @@ int contain_digit(char *str)
 
 int get_peak(Queue *stack)
 {
+    if (queue_is_empty(stack))
+        return (0);
     return stack->head->value;
 }
 
@@ -28,9 +30,10 @@ int queue_is_sorted(Queue *stack, int reverse)
         currentNode = stack->head;
         while (currentNode && currentNode->next != NULL)
         {
-            if (currentNode->value > currentNode->next->value)
+            if (currentNode->value < currentNode->next->value)
+                currentNode = currentNode->next;
+            else
                 return (0);
-            currentNode = currentNode->next;
         }
         return (1);
     }
@@ -39,9 +42,10 @@ int queue_is_sorted(Queue *stack, int reverse)
         currentNode = stack->tail;
         while (currentNode && currentNode->prev != NULL)
         {
-            if (currentNode->value > currentNode->prev->value)
+            if (currentNode->value < currentNode->prev->value)
+                currentNode = currentNode->prev;
+            else
                 return (0);
-            currentNode = currentNode->prev;
         }
         return (1);
     }
@@ -60,6 +64,22 @@ int peek_is_max(Queue *stack)
         if (peakNode->value < currentNode->value)
             return (0);
         currentNode = currentNode->next;
+    }
+    return (peakNode->value);
+}
+
+int peek_is_min(Node *peakNode)
+{
+    if (!peakNode)
+        return 0;
+
+    Node *nextNode = peakNode->next;
+
+    while (nextNode)
+    {
+        if (peakNode->value > nextNode->value)
+            return (0);
+        nextNode = nextNode->next;
     }
     return (peakNode->value);
 }

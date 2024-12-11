@@ -29,7 +29,7 @@ void queue_swap(Queue *stack)
 {
     if (queue_is_empty(stack) || stack->head->next == NULL)
         return;
-    
+
     int temp;
 
     temp = stack->head->value;
@@ -38,7 +38,7 @@ void queue_swap(Queue *stack)
 }
 void queue_reverse_rotate(Queue *stack)
 {
-    if(queue_is_empty(stack) || stack->size == 1)
+    if (queue_is_empty(stack) || stack->size == 1)
         return;
     Node *nodetemp = stack->tail;
     stack->tail = nodetemp->prev;

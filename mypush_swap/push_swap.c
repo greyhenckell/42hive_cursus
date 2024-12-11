@@ -2,9 +2,9 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-void	print_queue(Queue *table)
+void print_queue(Queue *table)
 {
-	Node	*current_item;
+	Node *current_item;
 
 	current_item = table->head;
 	while (current_item)
@@ -14,65 +14,99 @@ void	print_queue(Queue *table)
 	}
 }
 
-void push_position(Queue *stack_a ,Queue *stack_b)
+void push_position(Queue *stack_a, Queue *stack_b)
 {
 	if (queue_is_empty(stack_b))
 		queue_push(stack_a, stack_b);
 	else
 	{
-		//if( stack_b->size>1 && queue_is_sorted(stack_b,1))
+		// if( stack_b->size>1 && queue_is_sorted(stack_b,1))
 		//	return;
 
-		if(get_peak(stack_a) > get_peak(stack_b))
-			queue_push(stack_a,stack_b);
+		if (get_peak(stack_a) > get_peak(stack_b))
+			queue_push(stack_a, stack_b);
 		else
 		{
-			queue_push(stack_a,stack_b);
+			queue_push(stack_a, stack_b);
 			queue_rotate(stack_b);
 		}
 	}
 }
 
-void	run_algo(Queue *stack_a, Queue *stack_b)
+int check_status_b(Queue *stack)
 {
+	if (queue_is_sorted(stack, 1))
+		return 1;
 
-	if (queue_is_sorted(stack_a, 0) && queue_is_empty(stack_b))
-		return ;
-	else
+	if (stack->size >= 2)
 	{
-		//printf("--%d\n", stack_a->size);
-		/*if(stack_a->size <= 3)
+
+		if (peek_is_min(stack->head))
 		{
-			return;
-		}*/
-		if (peek_is_max(stack_a) > peek_is_max(stack_b) )
-		{
-			queue_rotate(stack_a);
-			//run_algo(stack_a, stack_b);
+			queue_rotate(stack);
 		}
-		if (is_tail_min(stack_a))
+		else if (peek_is_min(stack->head->next))
 		{
-			queue_reverse_rotate(stack_a);						
+			queue_swap(stack);
+			queue_rotate(stack);
 		}
-		if(get_peak(stack_a) < stack_a->head->next->value )
+	}
+	return 0;
+}
+
+int check_status_a(Queue *stack_a, Queue *stack_b)
+{
+	if (queue_is_sorted(stack_a, 0))
+		return 1;
+
+	if (stack_a->size >= 2)
+	{
+		if (peek_is_min(stack_a->head))
+			queue_push(stack_a, stack_b);
+		else if (peek_is_min(stack_a->head->next))
 		{
 			queue_swap(stack_a);
+			queue_push(stack_a, stack_b);
 		}
 		else
 		{
-			
-			push_position(stack_a ,stack_b);
+			queue_push(stack_a, stack_b);
 		}
 	}
-	//run_algo(stack_a, stack_b);
+	return 0;
 }
 
-int	check_duplicate(char **str, int input_len)
+void run_algo(Queue *stack_a, Queue *stack_b)
 {
-	int		item;
-	int		i;
-	Queue	*queue_A;
-	Queue	*queue_B;
+
+	if (queue_is_sorted(stack_a, 0) && queue_is_empty(stack_b))
+		return;
+	else
+	{
+		if (queue_is_sorted(stack_a, 0) && check_status_b(stack_b))
+			queue_push(stack_b, stack_a);
+
+		else if (peek_is_max(stack_a))
+			queue_rotate(stack_a);
+		else if (is_tail_min(stack_a))
+		{
+			queue_reverse_rotate(stack_a);
+			queue_push(stack_a, stack_b);
+		}
+		else
+		{
+			check_status_a(stack_a, stack_b);
+		}
+	}
+	run_algo(stack_a, stack_b);
+}
+
+int check_duplicate(char **str, int input_len)
+{
+	int item;
+	int i;
+	Queue *queue_A;
+	Queue *queue_B;
 
 	queue_A = create_queue();
 	queue_B = create_queue();
@@ -91,50 +125,9 @@ int	check_duplicate(char **str, int input_len)
 		i++;
 	}
 	//
+
 	printf("--QA--\n");
 	print_queue(queue_A);
-	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B);
-	printf("--QA--\n");
-	print_queue(queue_A);
-	printf("--QB--\n");
-	print_queue(queue_B);
-	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B);
-	printf("--QA--\n");
-	print_queue(queue_A);
-	printf("--QB--\n");
-	print_queue(queue_B);
-	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B);
-	printf("--QA--\n");
-	print_queue(queue_A);
-	printf("--QB--\n");
-	print_queue(queue_B);
-	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B);
-	printf("--QA--\n");
-	print_queue(queue_A);
-	printf("--QB--\n");
-	print_queue(queue_B);
-	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B);
-	printf("--QA--\n");
-	print_queue(queue_A);
-	printf("--QB--\n");
-	print_queue(queue_B);
-	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B);
-	printf("--QA--\n");
-	print_queue(queue_A);
-	printf("--QB--\n");
-	print_queue(queue_B);
-	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B);
-	printf("--QA--\n");
-	print_queue(queue_A);
-	printf("--QB--\n");
-	print_queue(queue_B);
 	printf("-----next_iter----\n");
 	run_algo(queue_A, queue_B);
 	printf("--QA--\n");
@@ -142,21 +135,58 @@ int	check_duplicate(char **str, int input_len)
 	printf("--QB--\n");
 	print_queue(queue_B);
 
-	
-	/*queue_push(queue_A, queue_B);
-	// printf("size:%d\n", queue_A->size);
+	/*printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
 	printf("--QA--\n");
 	print_queue(queue_A);
 	printf("--QB--\n");
 	print_queue(queue_B);
-	// printf("size:%d\n", queue_B->size);
-	queue_swap(queue_A);
+
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
 	printf("--QA--\n");
-	print_queue(queue_A);*/
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);
+	printf("-----next_iter----\n");
+	run_algo(queue_A, queue_B);
+	printf("--QA--\n");
+	print_queue(queue_A);
+	printf("--QB--\n");
+	print_queue(queue_B);*/
+
 	return (1);
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	if (argc > 1)
 		if (argc == 2)
