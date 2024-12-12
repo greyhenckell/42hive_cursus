@@ -68,20 +68,18 @@ int peek_is_max(Queue *stack)
     return (peakNode->value);
 }
 
-int peek_is_min(Node *peakNode)
+int peek_is_min(int peak, Node *currentNode)
 {
-    if (!peakNode)
+    if (!currentNode)
         return 0;
 
-    Node *nextNode = peakNode->next;
-
-    while (nextNode)
+    while (currentNode)
     {
-        if (peakNode->value > nextNode->value)
+        if (peak > currentNode->value)
             return (0);
-        nextNode = nextNode->next;
+        currentNode = currentNode->next;
     }
-    return (peakNode->value);
+    return (peak);
 }
 
 int is_tail_min(Queue *stack)

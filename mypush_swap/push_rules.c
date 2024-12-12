@@ -9,6 +9,7 @@ void queue_rotate(Queue *stack)
     nodetemp->next = NULL;
 
     stack->tail->next = nodetemp;
+    nodetemp->prev = stack->tail;
     stack->tail = nodetemp;
 }
 
