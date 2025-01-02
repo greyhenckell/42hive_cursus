@@ -99,6 +99,85 @@ int is_tail_min(Queue *stack)
     return (1);
 }
 
+int is_tail_max(Queue *stack)
+{
+    if (queue_is_empty(stack))
+        return 0;
+    Node *tailNode;
+    tailNode = stack->tail;
+
+    Node *currentNode = stack->tail->prev;
+    while (currentNode)
+    {
+        if (tailNode->value < currentNode->value)
+            return (0);
+        currentNode = currentNode->prev;
+    }
+    return (1);
+}
+#include <stdio.h>
+Node *find_target(int value, Node *currentNode, int limit)
+{
+    Node *head;
+    Node *bestTarget;
+    int min_distance = limit;
+
+    bestTarget = 0;
+    head = currentNode;
+    while (head)
+    {
+        if (head->value > value && (head->value - value) < min_distance)
+        {
+            bestTarget = head;
+            min_distance = head->value - value;
+        }
+        head = head->next;
+    }
+    if (!bestTarget)
+    {
+        head = currentNode;
+        bestTarget = head;
+        while (head)
+        {
+            if (head->value < bestTarget->value)
+                bestTarget = head;
+            head = head->next;
+        }
+    }
+    return bestTarget;
+}
+
+void assign_targets(Queue *stack_a, Queue *stack_b, int limit)
+{
+    Node *current = stack_a->head;
+    while (current)
+    {
+
+        current->target = find_target(current->value, stack_b->head, limit);
+        current = current->next;
+    }
+}
+
+void update_position(Node *stack)
+{
+    Node *currentNode = stack;
+    int i = 0;
+    while (currentNode)
+    {
+        currentNode->pos = i;
+        currentNode = currentNode->next;
+        i++;
+    }
+}
+
+int cost_topping(Node *stack, int size)
+{
+    Node *currentNode = stack;
+    if (currentNode->pos <= size / 2)
+        return currentNode->pos;
+    return (size - currentNode->pos);
+}
+
 int check_item_queue(Queue *table, int item)
 {
     Node *currentNode;
@@ -138,6 +217,7 @@ Node *new_node(int value)
     if (!newNode)
         return NULL;
     newNode->value = value;
+    newNode->pos = 0;
     newNode->next = NULL;
     newNode->prev = NULL;
 
@@ -149,7 +229,6 @@ void enqueue(Queue *queue, int value)
     Node *newNode;
 
     newNode = new_node(value);
-
     if (queue_is_empty(queue))
     {
         queue->head = newNode;

@@ -6,8 +6,10 @@
 typedef struct Node_s
 {
     int value;
+    int pos;
     struct Node_s *next;
     struct Node_s *prev;
+    struct Node_s *target;
 } Node;
 
 typedef struct
@@ -36,5 +38,12 @@ int get_peak(Queue *stack);
 int peek_is_max(Queue *stack);
 int is_tail_min(Queue *stack);
 int peek_is_min(int peak, Node *currentNode);
+Node *find_target(int value, Node *currentNode, int limit);
+void assign_targets(Queue *stack_a, Queue *stack_b, int limit);
+
+void update_position(Node *stack);
+int cost_topping(Node *stack, int size);
+
+int is_tail_max(Queue *stack);
 
 #endif
