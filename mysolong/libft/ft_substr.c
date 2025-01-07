@@ -10,42 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "../libft/libft.h"
+#include "libft.h"
 
-int ft_putnbr_base(long long n, int base, int c)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int count;
-	int tmp_count;
-	char out;
-	unsigned long long temp;
+	char	*out;
+	size_t	i;
+	size_t	lens;
 
-	count = 0;
-	if (n < 0 && base == 10)
+	lens = ft_strlen(s);
+	if (start >= lens)
+		len = 0;
+	i = 0;
+	if (len > lens - start)
+		len = lens - start;
+	out = (char *)malloc((len + 1) * sizeof(char));
+	if (out == NULL)
+		return (NULL);
+	while (i < len)
 	{
-		count = write(1, "-", 1);
-		if (count == -1)
-			return (-1);
-		temp = (unsigned long long)(-n);
+		out[i] = *(s + start + i);
+		i++;
 	}
-	else
-		temp = (unsigned long long)n;
-	if (temp >= (unsigned long long)base)
-		ft_putnbr_base((long long)(temp / base), base, c);
-	if ((temp % base) > 9)
-		out = c + (temp % base) - 10;
-	else
-		out = (temp % base) + 48;
-	if ((tmp_count = write(1, &out, 1)) == -1)
-		return (-1);
-	count += tmp_count;
-	return (count);
-}
-
-int ft_putchar(char c)
-{
-	int count;
-
-	count = write(1, &c, sizeof(c));
-	return count;
+	out[i] = '\0';
+	return (out);
 }
