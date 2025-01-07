@@ -2,7 +2,7 @@
 # makefile for libft functions
 #
 
-NAME = solong
+NAME = so_long
 
 CC = cc
 CCFLAGS := -Wall -Wextra -Werror -Iheaders -Imlx
@@ -21,6 +21,7 @@ MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
 .PHONY: all clean fclean re
 
 SRCS = $(SRC_DIR)/main.c \
+		$(SRC_DIR)/read_map.c \
 		$(GNL_DIR)/get_next_line.c \
        $(GNL_DIR)/get_next_line_utils.c \
 	   $(PRINTF_DIR)/ft_helpers.c \

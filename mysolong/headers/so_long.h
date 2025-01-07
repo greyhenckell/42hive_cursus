@@ -10,9 +10,11 @@ typedef struct s_data
     int endian;
 } t_data;
 
-#define WIDTH 600
-#define HEIGHT 600
+#define WIDTH 640
+#define HEIGHT 360
 
 #define ESC 65307
+
+int read_map(char *src);
 
 #endif
