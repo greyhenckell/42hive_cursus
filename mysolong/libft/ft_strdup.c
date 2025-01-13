@@ -11,11 +11,15 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-char	*ft_strdup(char *src)
+char *ft_strdup(char *src)
 {
-	char	*str_p;
+	char *str_p;
+	size_t len;
 
-	str_p = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (!src)
+		return NULL;
+	len = ft_strlen(src);
+	str_p = (char *)malloc((len + 1) * sizeof(char));
 	if (str_p == NULL)
 		return (NULL);
 	ft_strlcpy(str_p, src, ft_strlen(src) + 1);

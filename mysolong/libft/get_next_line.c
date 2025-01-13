@@ -10,23 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
+#include <stdio.h>
 
-void	create_line(char **ptrline, int fd, int *bytes_read)
+void create_line(char **ptrline, int fd, int *bytes_read)
 {
-	char	*temp;
-	char	*buff_content;
+	char *temp;
+	char *buff_content;
 
 	while (*bytes_read > 0 && ft_strchr(*ptrline, '\n') == NULL)
 	{
 		buff_content = malloc((BUFFER_SIZE + 1));
 		if (!buff_content)
-			return ;
+			return;
 		*bytes_read = read(fd, buff_content, BUFFER_SIZE);
 		if (*bytes_read == -1)
 		{
 			free(buff_content);
-			return ;
+			return;
 		}
 		buff_content[*bytes_read] = '\0';
 		temp = ft_strjoin(*ptrline, buff_content);
@@ -35,18 +36,18 @@ void	create_line(char **ptrline, int fd, int *bytes_read)
 		if (!temp)
 		{
 			*ptrline = NULL;
-			return ;
+			return;
 		}
 		*ptrline = temp;
 	}
 }
 
-char	*allocate_line(char **headline)
+char *allocate_line(char **headline)
 {
-	char	*temp;
-	char	*out;
-	size_t	rem_len;
-	char	*ptrline;
+	char *temp;
+	char *out;
+	size_t rem_len;
+	char *ptrline;
 
 	ptrline = ft_strchr(*headline, '\n');
 	rem_len = ptrline - *headline + 1;
@@ -65,21 +66,23 @@ char	*allocate_line(char **headline)
 	return (out);
 }
 
-char	*allocate_noline(char **headline)
+char *allocate_noline(char **headline)
 {
-	char	*out;
+	char *out;
 
+	if (!headline || !*headline)
+		return NULL;
 	out = ft_strdup(*headline);
 	free(*headline);
 	*headline = NULL;
 	return (out);
 }
 
-void	free_helper(char **headline)
+void free_helper(char **headline)
 {
 	if (*headline)
 	{
-		if(!*headline[0])
+		if (!*headline[0])
 		{
 			free(*headline);
 			*headline = NULL;
@@ -91,11 +94,11 @@ void	free_helper(char **headline)
 	return;
 }
 
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
-	static char	*headline;
-	char		*out;
-	int			bytes_read;
+	static char *headline;
+	char *out;
+	int bytes_read;
 
 	bytes_read = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -109,11 +112,13 @@ char	*get_next_line(int fd)
 	}
 	create_line(&headline, fd, &bytes_read);
 	free_helper(&headline);
-	if(!headline)
+	if (!headline)
 		return NULL;
 	if (ft_strchr(headline, '\n'))
 		out = allocate_line(&headline);
 	else
+	{
 		out = allocate_noline(&headline);
+	}
 	return (out);
 }

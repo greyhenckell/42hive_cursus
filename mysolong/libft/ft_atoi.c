@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_atoi(const char *nptr)
+#include <limits.h>
+int ft_atoi(const char *nptr)
 {
-	long	out;
-	int		i;
-	int		sign;
+	long out;
+	int i;
+	int sign;
 
 	i = 0;
 	out = 0;
