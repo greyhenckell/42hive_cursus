@@ -1,25 +1,26 @@
 #include "so_long.h"
 #include <stdio.h>
 
-void load_textures(t_data *data)
+void load_textures(t_img *img, void *conn)
 {
-    if (!data)
+    if (!img)
         return;
     int x;
     int y;
-    data->img.img_floor = mlx_xpm_file_to_image(data->mlx_conn, "./textures/floor.xpm", &x, &y);
-    data->img.img_wall = mlx_xpm_file_to_image(data->mlx_conn, "./textures/wall.xpm", &x, &y);
-    data->img.img_player = mlx_xpm_file_to_image(data->mlx_conn, "./textures/player.xpm", &x, &y);
-    data->img.img_exit = mlx_xpm_file_to_image(data->mlx_conn, "./textures/exit.xpm", &x, &y);
-    data->img.img_collectible = mlx_xpm_file_to_image(data->mlx_conn, "./textures/collectible.xpm", &x, &y);
+    img->img_floor = mlx_xpm_file_to_image(conn, "./textures/floor.xpm", &x, &y);
+    img->img_wall = mlx_xpm_file_to_image(conn, "./textures/wall.xpm", &x, &y);
+    img->img_player = mlx_xpm_file_to_image(conn, "./textures/player.xpm", &x, &y);
+    img->img_exit = mlx_xpm_file_to_image(conn, "./textures/exit.xpm", &x, &y);
+    img->img_collectible = mlx_xpm_file_to_image(conn, "./textures/collectible.xpm", &x, &y);
 }
 
-void game_setup(t_data *data, t_map *map)
+void game_setup(t_map *map, t_img *img, void *conn, void *win)
 {
-    if (data == NULL || map == NULL)
+    if (map == NULL)
         return;
-    load_textures(data);
-    if (!data->img.img_exit || !data->img.img_floor)
+
+    load_textures(img, conn);
+    if (!img->img_exit || !img->img_floor)
         printf("Error load image\n");
 
     int row = 0;
@@ -30,15 +31,15 @@ void game_setup(t_data *data, t_map *map)
         {
             // printf(":%c", map->map[row][item]);
             if (map->map[row][item] == '0')
-                mlx_put_image_to_window(data->mlx_conn, data->mlx_win, data->img.img_floor, item * 32, row * 32);
+                mlx_put_image_to_window(conn, win, img->img_floor, item * 33, row * 33);
             if (map->map[row][item] == '1')
-                mlx_put_image_to_window(data->mlx_conn, data->mlx_win, data->img.img_wall, item * 32, row * 32);
+                mlx_put_image_to_window(conn, win, img->img_wall, item * 33, row * 33);
             if (map->map[row][item] == 'C')
-                mlx_put_image_to_window(data->mlx_conn, data->mlx_win, data->img.img_collectible, item * 32, row * 32);
+                mlx_put_image_to_window(conn, win, img->img_collectible, item * 33, row * 33);
             if (map->map[row][item] == 'P')
-                mlx_put_image_to_window(data->mlx_conn, data->mlx_win, data->img.img_player, item * 32, row * 32);
+                mlx_put_image_to_window(conn, win, img->img_player, item * 33, row * 33);
             if (map->map[row][item] == 'E')
-                mlx_put_image_to_window(data->mlx_conn, data->mlx_win, data->img.img_exit, item * 32, row * 32);
+                mlx_put_image_to_window(conn, win, img->img_exit, item * 33, row * 33);
 
             item++;
         }
@@ -46,14 +47,3 @@ void game_setup(t_data *data, t_map *map)
         row++;
     }
 }
-
-// setmlx.img.img_ptr = mlx_new_image(setmlx.mlx_conn, WIDTH, HEIGHT);
-
-// vars.img.linelen = WIDTH * 4;
-
-// setmlx.img.img_buffer = mlx_get_data_addr(setmlx.img.img_ptr, &setmlx.img.bpp, &setmlx.img.linelen, &setmlx.img.endian);
-//  ft_put_pixel(&setmlx.img, 10, 10, 0x00FF0000);
-//  mlx_put_image_to_window(setmlx.mlx_conn, setmlx.mlx_win, setmlx.img.img_ptr, 100, 100);
-// mlx_loop_hook(setmlx.mlx_conn, render_frame, &setmlx);
-//  mlx_key_hook(setmlx.mlx_win, key_hook, &setmlx);
-//  mlx_hook(setmlx.mlx_win, 2, 1L << 0, ft_close, &setmlx);

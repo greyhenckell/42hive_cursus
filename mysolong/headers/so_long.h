@@ -37,9 +37,14 @@ typedef struct s_data
     void *mlx_win;
     t_img img;
     t_map *map;
+    int player_x;
+    int player_y;
 } t_data;
 
 int read_map(char *src, t_map *map);
-void game_setup(t_data *data, t_map *map);
+void game_setup(t_map *data, t_img *img, void *conn, void *win);
+
+void move_vert(t_data *data, int y);
+void move_horiz(t_data *data, int x);
 
 #endif

@@ -30,6 +30,7 @@ X = "\033[0m"
 SRCS = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/read_map.c \
 		$(SRC_DIR)/game_setup.c \
+		$(SRC_DIR)/moves.c \
 		
 
 
