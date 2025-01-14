@@ -45,26 +45,30 @@ int controls_working(int key, t_data *data)
         ft_exit(data);
     if (key == XK_a)
     {
-        printf("move up: %d %d \n", data->player_x, data->player_y);
-        direction *= -1;
-        move = move_horiz;
+        printf("move horz: %d %d \n", data->player_x, data->player_y);
+        direction = -1;
+        if (data->map->map[data->player_y][data->player_x - 1] != '1')
+            move = move_horiz;
     }
     if (key == XK_d)
     {
-        printf("move up: %d %d \n", data->player_x, data->player_y);
-        move = move_horiz;
+        printf("move horz: %d %d \n", data->player_x, data->player_y);
+        if (data->map->map[data->player_y][data->player_x + 1] != '1')
+            move = move_horiz;
     }
 
     if (key == XK_w)
     {
-        printf("move up: %d %d \n", data->player_x, data->player_y);
+        printf("move vert: %d %d \n", data->player_x, data->player_y);
         direction = -1;
-        move = move_vert;
+        if (data->map->map[data->player_y - 1][data->player_x] != '1')
+            move = move_vert;
     }
     if (key == XK_s)
     {
-        printf("move up: %d %d \n", data->player_x, data->player_y);
-        move = move_vert;
+        printf("move vert: %d %d \n", data->player_x, data->player_y);
+        if (data->map->map[data->player_y + 1][data->player_x] != '1')
+            move = move_vert;
     }
     if (move)
         move(data, direction);
