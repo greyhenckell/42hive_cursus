@@ -4,6 +4,8 @@
 int contain_digit(char *str)
 {
     int i = 0;
+    if (str[i] == '-')
+        i++;
     while (str[i] != '\0')
     {
         if (!ft_isdigit(str[i]))

@@ -2,46 +2,52 @@
 # makefile for libft functions
 #
 
-NAME = push_swap.a
+NAME = push_swap
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 INCLUDES = -I.
 
-AR = ar
-ARFLAGS = rcs
 
 SRC_DIR = .
-SRCS = $(SRC_DIR)/push_swap.c
+SRCS = $(SRC_DIR)/push_swap.c \
+	$(SRC_DIR)/push_swap_utils.c \
+	$(SRC_DIR)/push_rules.c \
 
-SUBDIR = libft
+#libft
+LIBFT_DIR = libft/
+LIBFT_FLAGS := -L$(LIBFT_DIR) -lft
+LIBFT_LIB = $(LIBFT_DIR)libft.a
 
 .PHONY: all clean fclean re ${SUBDIR}
 
 # Generate corresponding .o object files for each .c file
 OBJS = $(SRCS:$(SRC_DIR)/%.c=%.o)
 
-all:	$(NAME) $(SUBDIR)
+all: subsytems	$(NAME) 
 	@echo  Featured compiler named $(NAME) has been compiled
 
-$(NAME): $(OBJS) 
-	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
+subsytems:
+	@make -C $(LIBFT_DIR) all
 
-$(SUBDIR):
-	$(MAKE) -C $(SUBDIR)
+$(NAME): $(OBJS) 
+	$(CC) $(OBJS) $(CCFLAGS) $(LIBFT_FLAGS) -o $(NAME) 
+
 
 # Rule to compile object files from source files
-%.o: $(SRC_DIR)/%.c
+%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "files Compiled .o generated"
 
-clean:
-	rm -rf ${OBJS} $(NAME)
-	$(MAKE) -C $(SUBDIR) clean
+clean: 
+	@make -C $(LIBFT_DIR) clean
+	rm -rf ${OBJS}
 	@echo "Cleaned up generated files"
 
 fclean: clean
-	$(RM) $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	$(RM) -f $(NAME)
+	@echo removed $(NAME)
 # Rebuild the project from scratch
 re: fclean all
