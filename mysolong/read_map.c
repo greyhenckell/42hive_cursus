@@ -31,7 +31,7 @@ void duplicate_characters(char *line, int *rules)
     int i = 0;
     while (line[i] != '\0' && *rules <= 3)
     {
-        if (line[i] == 'C' || line[i] == 'P' || line[i] == 'E')
+        if (line[i] == 'P' || line[i] == 'E')
             (*rules)++;
         i++;
     }
@@ -50,6 +50,23 @@ void free_map(t_map *map, int indx)
     }
 }
 
+int num_lines(int fd)
+{
+    char *line = NULL;
+    int num;
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        num++;
+        free(line);
+    }
+    if (lseek(fd, 0, SEEK_SET) == -1)
+    {
+        printf("Error resetting fd");
+        return -1;
+    }
+    return num;
+}
+
 int read_map(char *src, t_map *map)
 {
     char *line = NULL;
@@ -65,15 +82,14 @@ int read_map(char *src, t_map *map)
     int numlines = 0;
     int prev_lenline = 0;
     map->map = NULL;
-
-    map->map = (char **)malloc((5) * sizeof(char *));
-    ft_memset(map->map, 0, 5 + 1);
+    int size = num_lines(fd);
+    map->map = (char **)malloc(size * sizeof(char *));
     if (map->map == NULL)
     {
         close(fd);
         return (1);
     }
-
+    ft_memset(map->map, 0, size + 1);
     while ((line = get_next_line(fd)) != NULL)
     {
 
