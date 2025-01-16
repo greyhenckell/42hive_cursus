@@ -15,6 +15,20 @@ void queue_rotate(Queue *stack)
     write(1,"ra\n",3);
 }
 
+void queue_reverse_hook(Queue *stack)
+{
+    if (queue_is_empty(stack) || stack->size == 1)
+        return;
+    Node *nodetemp = stack->tail;
+    stack->tail = nodetemp->prev;
+    stack->tail->next = NULL;
+
+    nodetemp->prev = NULL;
+    nodetemp->next = stack->head;
+    stack->head->prev = nodetemp;
+    stack->head = nodetemp;
+}
+
 void queue_push(Queue *origin, Queue *dest)
 {
     if (queue_is_empty(origin))
@@ -25,7 +39,7 @@ void queue_push(Queue *origin, Queue *dest)
     origin->head = origin->head->next;
     free(nodetemp);
     origin->size--;
-    queue_reverse_rotate(dest);
+    queue_reverse_hook(dest);
     dest->size++;
     write(1,"pb\n",3);
 }
@@ -54,5 +68,5 @@ void queue_reverse_rotate(Queue *stack)
     nodetemp->next = stack->head;
     stack->head->prev = nodetemp;
     stack->head = nodetemp;
-    write(1,"rra\n",4);
+    write(1,"rra\n",3);
 }

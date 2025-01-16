@@ -100,12 +100,38 @@ void sort_three_items(Queue *stack)
 		queue_reverse_rotate(stack);
 }
 
-void back_to_origin(Queue *stack_a, Queue *stack_b)
+void sort_five(Queue *stack_a , Queue *stack_b)
 {
-	queue_push(stack_b, stack_a);
-	if ( peek_is_max(stack_a))
+	if ( stack_b->size < 3 && !queue_is_sorted(stack_a,0))
+	{
+		queue_push(stack_a, stack_b);
+		if ( stack_b->size > 1 && !peek_is_max(stack_b) )
+			queue_rotate(stack_b);
+	}
+	else if (peek_is_max(stack_a) && stack_a->head->value > peek_is_max(stack_b))
+		queue_push(stack_a,stack_b);
+	else
+	{
+		sort_three_items(stack_a);
+		if ( stack_b->size >0 )
+		{
+			queue_rotate(stack_b);
+			queue_push(stack_b, stack_a);
+			queue_rotate(stack_a);
+		}
+	}
+	
+}
+
+void find_medium(Queue *stack_a, Queue *stack_b)
+{
+	int medium;
+	medium = (stack_a->head->value + stack_a->tail->value)/2;
+	printf("med:%d\n",medium);
+	if (stack_a->head->value > medium)
+		queue_push(stack_a, stack_b);
+	else
 		queue_rotate(stack_a);
-	return;
 }
 
 void run_algo(Queue *stack_a, Queue *stack_b, int counter)
@@ -120,25 +146,22 @@ void run_algo(Queue *stack_a, Queue *stack_b, int counter)
 	else
 	{
 		if (stack_a->size == 3 )
-		{
 			sort_three_items(stack_a);
-			if ( queue_is_sorted(stack_a,0) )
-			{
-				queue_push(stack_b, stack_a);		
-			}			
-		}
-		else if ( !queue_is_sorted(stack_a,0) && stack_b->size < 3)
+		else if ( stack_a->size == 5)
 		{
-				queue_push(stack_a ,stack_b);
+				sort_five(stack_a ,stack_b);
+				sort_five(stack_a ,stack_b);
+				sort_five(stack_a ,stack_b);
+				
 		}
 		else
 		{
 
 			printf("here");
-			back_to_origin(stack_a, stack_b);
+			
 			//return;
 		}
-	} run_algo(stack_a, stack_b, counter);
+	} //run_algo(stack_a, stack_b, counter);
 }
 
 int check_duplicate(char **str, int input_len)
@@ -177,7 +200,8 @@ int check_duplicate(char **str, int input_len)
 
 	
 
-
+	
+	
 	/*
 
 	printf("-----next_iter----\n");
