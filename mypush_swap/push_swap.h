@@ -17,6 +17,8 @@ typedef struct
     Node *head;
     Node *tail;
     int size;
+    int min;
+    int max;
 } Queue;
 
 int contain_digit(char *str);
