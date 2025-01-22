@@ -1,7 +1,7 @@
 #include "push_swap.h"
 #include "libft/libft.h"
 
-void queue_rotate(Queue *stack)
+void queue_rotate(Queue *stack, int list)
 {
     if (queue_is_empty(stack))
         return;
@@ -12,7 +12,9 @@ void queue_rotate(Queue *stack)
     stack->tail->next = nodetemp;
     nodetemp->prev = stack->tail;
     stack->tail = nodetemp;
-    write(1,"ra\n",3);
+    if (list)
+        write(1, "rb\n", 3);
+    write(1, "ra\n", 3);
 }
 
 void queue_reverse_hook(Queue *stack)
@@ -29,7 +31,7 @@ void queue_reverse_hook(Queue *stack)
     stack->head = nodetemp;
 }
 
-void queue_push(Queue *origin, Queue *dest)
+void queue_push(Queue *origin, Queue *dest, int stack)
 {
     if (queue_is_empty(origin))
         return;
@@ -40,11 +42,13 @@ void queue_push(Queue *origin, Queue *dest)
     free(nodetemp);
     origin->size--;
     queue_reverse_hook(dest);
-    dest->size++;
-    write(1,"pb\n",3);
+    // dest->size++;
+    if (stack)
+        write(1, "pa\n", 3);
+    write(1, "pb\n", 3);
 }
 
-void queue_swap(Queue *stack)
+void queue_swap(Queue *stack, int origin)
 {
     if (queue_is_empty(stack) || stack->head->next == NULL)
         return;
@@ -54,7 +58,17 @@ void queue_swap(Queue *stack)
     temp = stack->head->value;
     stack->head->value = stack->head->next->value;
     stack->head->next->value = temp;
-    write(1,"sa\n",3);
+    if (origin == 0)
+        write(1, "sb\n", 3);
+    if (origin == 1)
+        write(1, "sa\n", 3);
+}
+
+void queue_ss(Queue *stack_a, Queue *stack_b)
+{
+    queue_swap(stack_a, 2);
+    queue_swap(stack_b, 2);
+    write(1, "ss\n", 3);
 }
 void queue_reverse_rotate(Queue *stack)
 {
@@ -68,5 +82,5 @@ void queue_reverse_rotate(Queue *stack)
     nodetemp->next = stack->head;
     stack->head->prev = nodetemp;
     stack->head = nodetemp;
-    write(1,"rra\n",3);
+    write(1, "rra\n", 4);
 }

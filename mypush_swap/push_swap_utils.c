@@ -1,5 +1,6 @@
 #include "libft/libft.h"
 #include "push_swap.h"
+#include <stdio.h>
 
 int contain_digit(char *str)
 {
@@ -53,45 +54,48 @@ int queue_is_sorted(Queue *stack, int reverse)
     }
 }
 
-int peek_is_max(Queue *stack)
+int peek_is_max(Node *node)
 {
-    if (queue_is_empty(stack))
+    if (!node)
         return 0;
     Node *peakNode;
-    peakNode = stack->head;
-
-    Node *currentNode = stack->head->next;
+    peakNode = node;
+    Node *currentNode = node->next;
     while (currentNode)
     {
         if (peakNode->value < currentNode->value)
             return (0);
         currentNode = currentNode->next;
     }
-    return (peakNode->value);
+    free(currentNode);
+    return (1);
 }
 
-int peek_is_min(int peak, Node *currentNode)
+int peek_is_min(Node *node)
 {
-    if (!currentNode)
+    if (!node)
         return 0;
-
+    Node *peakNode;
+    peakNode = node;
+    Node *currentNode = node->next;
     while (currentNode)
     {
-        if (peak > currentNode->value)
+        if (peakNode->value > currentNode->value)
             return (0);
         currentNode = currentNode->next;
     }
-    return (peak);
+    free(currentNode);
+    return (1);
 }
 
-int is_tail_min(Queue *stack)
+int is_tail_min(Node *node)
 {
-    if (queue_is_empty(stack))
+    if (!node)
         return 0;
     Node *tailNode;
-    tailNode = stack->tail;
+    tailNode = node;
 
-    Node *currentNode = stack->tail->prev;
+    Node *currentNode = node->prev;
     while (currentNode)
     {
         if (tailNode->value > currentNode->value)
@@ -101,14 +105,14 @@ int is_tail_min(Queue *stack)
     return (1);
 }
 
-int is_tail_max(Queue *stack)
+int is_tail_max(Node *node)
 {
-    if (queue_is_empty(stack))
+    if (!node)
         return 0;
     Node *tailNode;
-    tailNode = stack->tail;
+    tailNode = node;
 
-    Node *currentNode = stack->tail->prev;
+    Node *currentNode = node->prev;
     while (currentNode)
     {
         if (tailNode->value < currentNode->value)
@@ -128,10 +132,13 @@ Node *find_target(int value, Node *currentNode, int limit)
     head = currentNode;
     while (head)
     {
-        if (head->value > value && (head->value - value) < min_distance)
+        // printf("besttg:%d %d dist:%d\n", value, head->value, min_distance);
+        if ((head->value - value) < min_distance && !(head->target))
         {
+
             bestTarget = head;
             min_distance = head->value - value;
+            head->target = head;
         }
         head = head->next;
     }
@@ -222,6 +229,7 @@ Node *new_node(int value)
     newNode->pos = 0;
     newNode->next = NULL;
     newNode->prev = NULL;
+    newNode->target = NULL;
 
     return newNode;
 }

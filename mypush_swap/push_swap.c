@@ -17,43 +17,20 @@ void print_queue(Queue *table)
 void push_position(Queue *stack_a, Queue *stack_b)
 {
 	if (queue_is_empty(stack_b))
-		queue_push(stack_a, stack_b);
+		queue_push(stack_a, stack_b, 0);
 	else
 	{
 		// if( stack_b->size>1 && queue_is_sorted(stack_b,1))
 		//	return;
 
 		if (get_peak(stack_a) > get_peak(stack_b))
-			queue_push(stack_a, stack_b);
+			queue_push(stack_a, stack_b, 0);
 		else
 		{
-			queue_push(stack_a, stack_b);
-			queue_rotate(stack_b);
+			queue_push(stack_a, stack_b, 0);
+			queue_rotate(stack_b, 1);
 		}
 	}
-}
-
-int check_status_b(Queue *stack)
-{
-	if (queue_is_empty(stack))
-		return 0;
-	if (queue_is_sorted(stack, 1))
-		return 1;
-
-	if (stack->size >= 2)
-	{
-
-		if (peek_is_min(get_peak(stack), stack->head->next))
-		{
-			queue_rotate(stack);
-		}
-		else if (peek_is_min(stack->head->next->value, stack->head->next->next))
-		{
-			queue_swap(stack);
-			queue_rotate(stack);
-		}
-	}
-	return 0;
 }
 
 int cost_target(Node *targetNode, Node *stack, int size)
@@ -92,76 +69,100 @@ Node *cost_a2b(Queue *stack_a, Queue *stack_b)
 
 void sort_three_items(Queue *stack)
 {
-	if (peek_is_max(stack))
-		queue_rotate(stack);
+	if (peek_is_max(stack->head))
+		queue_rotate(stack, 0);
 	else if (stack->head->value > stack->head->next->value)
-				queue_swap(stack);
+		queue_swap(stack, 0);
 	else
 		queue_reverse_rotate(stack);
 }
 
-void sort_five(Queue *stack_a , Queue *stack_b)
+void sort_five(Queue *stack_a, Queue *stack_b)
 {
-	if ( stack_b->size < 3 && !queue_is_sorted(stack_a,0))
+	(void)stack_b;
+	Node *head_ptr = stack_a->head;
+	int min = head_ptr->value;
+	int max = stack_a->tail->value;
+	int median = 0;
+	// printf("val: %d, max:%d\n", head->value, peek_is_max(head));
+	update_position(head_ptr);
+	while (!peek_is_min(head_ptr))
+		head_ptr = head_ptr->next;
+	min = head_ptr->value;
+	head_ptr = stack_a->head;
+	while (!peek_is_max(head_ptr))
+		head_ptr = head_ptr->next;
+	max = head_ptr->value;
+	head_ptr = stack_a->head;
+	// printf("min:%d max:%d\n", min, max);
+	median = (min + max) / 2;
+	while (head_ptr->value != median)
 	{
-		queue_push(stack_a, stack_b);
-		if ( stack_b->size > 1 && !peek_is_max(stack_b) )
-			queue_rotate(stack_b);
-	}
-	else if (peek_is_max(stack_a) && stack_a->head->value > peek_is_max(stack_b))
-		queue_push(stack_a,stack_b);
-	else
-	{
-		sort_three_items(stack_a);
-		if ( stack_b->size >0 )
+		printf("min:%d max:%d, curr;%d, med:%d\n", min, max, head_ptr->value, median);
+		if (head_ptr->value < median)
 		{
-			queue_rotate(stack_b);
-			queue_push(stack_b, stack_a);
-			queue_rotate(stack_a);
+			queue_push(stack_a, stack_b, 0);
+			head_ptr = stack_a->head;
 		}
+		else
+		{
+			queue_rotate(stack_a, 0);
+			head_ptr = stack_a->head;
+		}
+		head_ptr = head_ptr->next;
 	}
-	
+}
+
+void push_back(Queue *stack_a, Queue *stack_b)
+{
+
+	while (stack_b->size > 0)
+	{
+		if (get_peak(stack_b) < stack_b->tail->value)
+			queue_reverse_rotate(stack_b);
+		queue_push(stack_b, stack_a, 1);
+	}
 }
 
 void find_medium(Queue *stack_a, Queue *stack_b)
 {
 	int medium;
-	medium = (stack_a->head->value + stack_a->tail->value)/2;
-	printf("med:%d\n",medium);
+	medium = (stack_a->head->value + stack_a->tail->value) / 2;
+	printf("med:%d\n", medium);
 	if (stack_a->head->value > medium)
-		queue_push(stack_a, stack_b);
+		queue_push(stack_a, stack_b, 0);
 	else
-		queue_rotate(stack_a);
+		queue_rotate(stack_a, 0);
 }
 
 void run_algo(Queue *stack_a, Queue *stack_b, int counter)
 {
 	int n;
 	n = counter + 3;
-	//Node *temp = NULL;
+	// Node *temp = NULL;
 
 	(void)n;
 	if (queue_is_sorted(stack_a, 0) && queue_is_empty(stack_b))
 		return;
 	else
 	{
-		if (stack_a->size == 3 )
+
+		if (stack_a->size == 3)
 			sort_three_items(stack_a);
-		else if ( stack_a->size == 5)
+		else if (stack_a->size == 5)
 		{
-				sort_five(stack_a ,stack_b);
-				sort_five(stack_a ,stack_b);
-				sort_five(stack_a ,stack_b);
-				
+			sort_five(stack_a, stack_b);
+			// printf("1st logic B size: %d\n", stack_b->size);
+			// push_back(stack_a, stack_b);
 		}
 		else
 		{
 
 			printf("here");
-			
-			//return;
+
+			// return;
 		}
-	} //run_algo(stack_a, stack_b, counter);
+	} // run_algo(stack_a, stack_b, counter);
 }
 
 int check_duplicate(char **str, int input_len)
@@ -189,7 +190,7 @@ int check_duplicate(char **str, int input_len)
 	}
 	//
 
-	printf("--QA--\n");
+	printf("--INPUT--\n");
 	print_queue(queue_A);
 	printf("-----next_iter----\n");
 	run_algo(queue_A, queue_B, 0);
@@ -198,10 +199,6 @@ int check_duplicate(char **str, int input_len)
 	printf("--QB--\n");
 	print_queue(queue_B);
 
-	
-
-	
-	
 	/*
 
 	printf("-----next_iter----\n");
