@@ -121,23 +121,28 @@ int is_tail_max(Node *node)
     }
     return (1);
 }
-#include <stdio.h>
+
 Node *find_target(int value, Node *currentNode, int limit)
 {
     Node *head;
     Node *bestTarget;
     int min_distance = limit;
+    int temp;
 
     bestTarget = 0;
     head = currentNode;
     while (head)
     {
-        // printf("besttg:%d %d dist:%d\n", value, head->value, min_distance);
-        if ((head->value - value) < min_distance && !(head->target))
+
+        temp = head->value - value;
+        if (temp < 0)
+            temp *= -1;
+        // printf("besttg:%d %d dist:%d tmp:%d\n", value, head->value, min_distance, temp);
+        if (temp < min_distance && !(head->target))
         {
 
             bestTarget = head;
-            min_distance = head->value - value;
+            min_distance = temp;
             head->target = head;
         }
         head = head->next;

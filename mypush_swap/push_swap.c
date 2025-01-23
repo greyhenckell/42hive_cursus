@@ -74,54 +74,78 @@ void sort_three_items(Queue *stack)
 	else if (stack->head->value > stack->head->next->value)
 		queue_swap(stack, 0);
 	else
-		queue_reverse_rotate(stack);
+		queue_reverse_rotate(stack, 0);
 }
 
 void sort_five(Queue *stack_a, Queue *stack_b, int median)
 {
-	(void)stack_b;
 	Node *head_ptr = stack_a->head;
 	int med_dist = INT_MAX;
 	int temp;
-	while(head_ptr)
+	int tail_value;
+	if (!queue_is_sorted(stack_a, 0))
 	{
-		temp = (head_ptr->value - median);
-		if ( temp < 0)
+		while (head_ptr)
+		{
+			temp = (head_ptr->value - median);
+			if (temp < 0)
 				temp *= -1;
-
-		if ( temp < med_dist)
-			med_dist = temp;
-		head_ptr = head_ptr->next;
-	}
-	head_ptr = stack_a->head;
-	update_position(head_ptr);
-	printf("medStack:%d\n", med_dist);
-	while (head_ptr->value != med_dist)
-	{
-		//printf("min:%d max:%d, curr;%d, med:%d\n", min, max, head_ptr->value, median);
-		if (head_ptr->value < median)
+			if (temp < med_dist)
+			{
+				med_dist = temp;
+				stack_a->med = head_ptr->value;
+			}
+			head_ptr = head_ptr->next;
+		}
+		head_ptr = stack_a->head;
+		tail_value = stack_a->tail->value;
+		printf("med:%d\n", stack_a->med);
+		while (head_ptr->value != tail_value)
 		{
-			queue_push(stack_a, stack_b, 0);
+			if (head_ptr->value <= stack_a->med)
+				queue_push(stack_a, stack_b, 0);
+			else
+				queue_rotate(stack_a, 0);
 			head_ptr = stack_a->head;
 		}
-		else
-		{
-			queue_rotate(stack_a, 0);
-			head_ptr = stack_a->head;
-		}
-		head_ptr = head_ptr->next;
+		sort_five(stack_a, stack_b, median);
 	}
+	else
+		return;
 }
 
 void push_back(Queue *stack_a, Queue *stack_b)
 {
-
-	while (stack_b->size > 0)
+	if (stack_b->size > 0)
 	{
-		if (get_peak(stack_b) < stack_b->tail->value)
-			queue_reverse_rotate(stack_b);
-		queue_push(stack_b, stack_a, 1);
+		update_position(stack_a->head);
+		update_position(stack_b->head);
+		assign_targets(stack_a, stack_b, INT_MAX);
+		// printf("bz:%d tgpos:%d\n", stack_a->head->value, stack_a->head->target->pos);
+		// printf("tg_pos:%d\n", stack_a->tail->target->pos);
+		if (stack_a->tail->target->pos == stack_b->size - 1 && stack_b->size > 1)
+		{
+			// printf("here");
+			queue_rrr(stack_a, stack_b);
+			queue_push(stack_b, stack_a, 1);
+			queue_reverse_rotate(stack_a, 0);
+		}
+
+		if (stack_a->head->target->pos == 0 || stack_b->size == 1)
+		{
+			queue_push(stack_b, stack_a, 1);
+			if (stack_a->head->value > stack_a->head->next->value)
+				queue_swap(stack_a, 0);
+		}
+		/*else if (peek_is_max(stack_b->head->next->value) && stack_a->head->target->pos == 1)
+		{
+			queue_swap(stack_b, 1);
+			queue_push(stack_b, stack_a, 1);
+		}*/
+
+		push_back(stack_a, stack_b);
 	}
+	return;
 }
 
 void find_medium(Queue *stack_a, Queue *stack_b)
@@ -137,7 +161,7 @@ void find_medium(Queue *stack_a, Queue *stack_b)
 
 void run_algo(Queue *stack_a, Queue *stack_b, int median)
 {
-	
+
 	if (queue_is_sorted(stack_a, 0) && queue_is_empty(stack_b))
 		return;
 	else
@@ -148,8 +172,8 @@ void run_algo(Queue *stack_a, Queue *stack_b, int median)
 		else if (stack_a->size == 5)
 		{
 			sort_five(stack_a, stack_b, median);
-			// printf("1st logic B size: %d\n", stack_b->size);
-			// push_back(stack_a, stack_b);
+			push_back(stack_a, stack_b);
+			//   queue_swap(stack_a, 0);
 		}
 		else
 		{
@@ -160,7 +184,6 @@ void run_algo(Queue *stack_a, Queue *stack_b, int median)
 		}
 	} // run_algo(stack_a, stack_b, counter);
 }
-
 
 int check_duplicate(char **str, int input_len)
 {
@@ -182,7 +205,7 @@ int check_duplicate(char **str, int input_len)
 			item = ft_atoi(str[i]);
 			if (item > maxValue)
 				maxValue = item;
-			if ( item < minValue)
+			if (item < minValue)
 				minValue = item;
 			if (check_item_queue(queue_A, item) == 0)
 				enqueue(queue_A, item);
@@ -192,11 +215,11 @@ int check_duplicate(char **str, int input_len)
 		i++;
 	}
 	//
-	//printf("max:%d min:%d\n", maxValue, minValue, );
+	// printf("max:%d min:%d\n", maxValue, minValue, );
 	printf("--INPUT--\n");
 	print_queue(queue_A);
 	printf("-----next_iter----\n");
-	run_algo(queue_A, queue_B, (maxValue+minValue)/2);
+	run_algo(queue_A, queue_B, (maxValue + minValue) / 2);
 	printf("--QA--\n");
 	print_queue(queue_A);
 	printf("--QB--\n");

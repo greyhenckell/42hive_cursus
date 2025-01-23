@@ -17,8 +17,7 @@ typedef struct
     Node *head;
     Node *tail;
     int size;
-    int min;
-    int max;
+    int med;
 } Queue;
 
 int contain_digit(char *str);
@@ -27,7 +26,7 @@ int contain_digit(char *str);
 void queue_swap(Queue *stack, int origin);
 void queue_rotate(Queue *stack, int list);
 void queue_push(Queue *origin, Queue *dest, int stack);
-void queue_reverse_rotate(Queue *stack);
+void queue_reverse_rotate(Queue *stack, int origin);
 
 // utils
 Node *new_node(int value);
@@ -48,5 +47,6 @@ int cost_topping(Node *stack, int size);
 
 int is_tail_max(Node *node);
 void queue_ss(Queue *stack_a, Queue *stack_b);
+void queue_rrr(Queue *stack_a, Queue *stack_b);
 
 #endif
