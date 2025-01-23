@@ -116,14 +116,14 @@ void sort_five(Queue *stack_a, Queue *stack_b, int median)
 
 void push_back(Queue *stack_a, Queue *stack_b)
 {
-	if (stack_b->size > 0)
+	if (stack_b->size > 0 && queue_is_sorted(stack_a, 0))
 	{
 		update_position(stack_a->head);
 		update_position(stack_b->head);
 		assign_targets(stack_a, stack_b, INT_MAX);
 		// printf("bz:%d tgpos:%d\n", stack_a->head->value, stack_a->head->target->pos);
-		// printf("tg_pos:%d\n", stack_a->tail->target->pos);
-		if (stack_a->tail->target->pos == stack_b->size - 1 && stack_b->size > 1)
+		printf("tg_pos:%d\n", stack_a->tail->target->pos);
+		if (queue_is_sorted(stack_a, 0) && stack_a->tail->target->pos == stack_b->size - 1 && stack_b->size > 1)
 		{
 			// printf("here");
 			queue_rrr(stack_a, stack_b);
@@ -137,13 +137,20 @@ void push_back(Queue *stack_a, Queue *stack_b)
 			if (stack_a->head->value > stack_a->head->next->value)
 				queue_swap(stack_a, 0);
 		}
-		/*else if (peek_is_max(stack_b->head->next->value) && stack_a->head->target->pos == 1)
+		if (stack_a->head->target->pos == 1)
 		{
 			queue_swap(stack_b, 1);
 			queue_push(stack_b, stack_a, 1);
-		}*/
+		}
+		if (queue_is_sorted(stack_a, 0) && stack_b->size == 2 && peek_is_min(stack_b->head))
+		{
+			queue_swap(stack_b, 1);
+			queue_push(stack_b, stack_a, 1);
+		}
+		if (queue_is_sorted(stack_a, 0) && stack_b->size == 1)
+			queue_push(stack_b, stack_a, 1);
 
-		push_back(stack_a, stack_b);
+		// push_back(stack_a, stack_b);
 	}
 	return;
 }
@@ -173,7 +180,7 @@ void run_algo(Queue *stack_a, Queue *stack_b, int median)
 		{
 			sort_five(stack_a, stack_b, median);
 			push_back(stack_a, stack_b);
-			//   queue_swap(stack_a, 0);
+			//      queue_swap(stack_a, 0);
 		}
 		else
 		{
