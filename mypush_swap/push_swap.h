@@ -48,5 +48,6 @@ int cost_topping(Node *stack, int size);
 int is_tail_max(Node *node);
 void queue_ss(Queue *stack_a, Queue *stack_b);
 void queue_rrr(Queue *stack_a, Queue *stack_b);
+void queue_rr(Queue *stack_a, Queue *stack_b);
 
 #endif

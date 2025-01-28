@@ -12,10 +12,17 @@ void queue_rotate(Queue *stack, int list)
     stack->tail->next = nodetemp;
     nodetemp->prev = stack->tail;
     stack->tail = nodetemp;
-    if (list)
+    if (list == 1)
         write(1, "rb\n", 3);
-    else
+    if (list == 0)
         write(1, "ra\n", 3);
+}
+
+void queue_rr(Queue *stack_a, Queue *stack_b)
+{
+    queue_rotate(stack_a, 2);
+    queue_rotate(stack_b, 2);
+    write(1, "rr\n", 3);
 }
 
 void queue_reverse_hook(Queue *stack)
