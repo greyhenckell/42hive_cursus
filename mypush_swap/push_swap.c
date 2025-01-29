@@ -83,6 +83,19 @@ void sort_three_items(Queue *stack)
     sort_three_items(stack);
 }
 
+void move_simu(Queue *stack_a, Queue *stack_b)
+{
+    if (stack_b->size > 1)
+    {
+        if (peek_is_max(stack_a->head->next) && is_tail_max(stack_b->tail))
+            queue_rrr(stack_a, stack_b);
+        if (peek_is_max(stack_a->head) && peek_is_min(stack_b->head))
+            queue_rr(stack_a, stack_b);
+        if (peek_is_max(stack_b->head) && queue_is_sorted(stack_a,0))
+            queue_push(stack_b, stack_a, 1);
+    }
+}
+
 void sort_five(Queue *stack_a, Queue *stack_b, int median)
 {
     Node *head_ptr = stack_a->head;
@@ -130,15 +143,7 @@ void sort_five(Queue *stack_a, Queue *stack_b, int median)
     if (is_tail_min(stack_a->tail))
         queue_reverse_rotate(stack_a, 0);
 
-    if (stack_b->size > 1)
-    {
-        if (peek_is_max(stack_a->head->next) && is_tail_max(stack_b->tail))
-            queue_rrr(stack_a, stack_b);
-        if (peek_is_max(stack_a->head) && peek_is_min(stack_b->head))
-            queue_rr(stack_a, stack_b);
-        if (peek_is_max(stack_b->head))
-            queue_push(stack_b, stack_a, 1);
-    }
+    move_simu(stack_a, stack_b);
 
     if (stack_b->size == 1)
         queue_push(stack_b, stack_a, 1);
@@ -176,6 +181,31 @@ void find_medium(Queue *stack_a, Queue *stack_b)
         queue_rotate(stack_a, 0);
 }
 
+void sort_stack(Queue *stack_a, Queue *stack_b, int med)
+{
+    printf("med:%d\n",med);
+    int pos = 0;
+    int size = stack_a-> size;
+    while(pos < size)
+    {
+        if ( stack_a->head->value < med)
+            queue_push(stack_a, stack_b,0);
+        else
+            queue_rotate(stack_a,0);
+        pos++;
+    }
+
+    move_simu(stack_a, stack_b);
+    //update_position(stack_a);
+    if(get_peak(stack_a)> stack_a->head->next->value &&
+        get_peak(stack_b)> stack_b->head->next->value
+    )
+        queue_ss(stack_a,stack_b);
+
+
+
+}
+
 void run_algo(Queue *stack_a, Queue *stack_b, int median)
 {
 
@@ -194,9 +224,8 @@ void run_algo(Queue *stack_a, Queue *stack_b, int median)
         else
         {
 
-            printf("here");
-
-            return;
+            sort_stack(stack_a,stack_b, median);
+            
         }
     } // run_algo(stack_a, stack_b, median);
 }
