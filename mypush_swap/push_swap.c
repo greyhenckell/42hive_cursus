@@ -181,12 +181,10 @@ void find_medium(Queue *stack_a, Queue *stack_b)
         queue_rotate(stack_a, 0);
 }
 
-void sort_stack(Queue *stack_a, Queue *stack_b, int med)
+void pivot_stack(Queue *stack_a, Queue *stack_b, int stack_size, int med)
 {
-    printf("med:%d\n",med);
     int pos = 0;
-    int size = stack_a-> size;
-    while(pos < size)
+    while(pos < stack_size)
     {
         if ( stack_a->head->value < med)
             queue_push(stack_a, stack_b,0);
@@ -194,13 +192,21 @@ void sort_stack(Queue *stack_a, Queue *stack_b, int med)
             queue_rotate(stack_a,0);
         pos++;
     }
+}
 
+void sort_stack(Queue *stack_a, Queue *stack_b, int med)
+{
+    printf("med:%d\n",med);
+    
+    pivot_stack(stack_a, stack_b, stack_a->size, med);
     move_simu(stack_a, stack_b);
     //update_position(stack_a);
-    if(get_peak(stack_a)> stack_a->head->next->value &&
-        get_peak(stack_b)> stack_b->head->next->value
-    )
-        queue_ss(stack_a,stack_b);
+   if ( !queue_is_sorted(stack_a,0))
+   {
+        int border = stack_b->head;
+        int newmed = med + stack_a
+        pivot_stack(stack_a, stack_b, stack_a->size, )
+   }
 
 
 
