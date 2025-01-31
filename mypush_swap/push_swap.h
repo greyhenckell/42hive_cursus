@@ -18,6 +18,8 @@ typedef struct
     Node *tail;
     int size;
     int med;
+    int max;
+    int min;
 } Queue;
 
 int contain_digit(char *str);
@@ -36,6 +38,7 @@ void enqueue(Queue *queue, int value);
 int check_item_queue(Queue *table, int item);
 int queue_is_sorted(Queue *stack, int reverse);
 int get_peak(Queue *stack);
+int get_next_peak(Queue *stack);
 int peek_is_max(Node *node);
 int is_tail_min(Node *node);
 int peek_is_min(Node *node);

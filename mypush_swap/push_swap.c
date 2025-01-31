@@ -91,7 +91,7 @@ void move_simu(Queue *stack_a, Queue *stack_b)
             queue_rrr(stack_a, stack_b);
         if (peek_is_max(stack_a->head) && peek_is_min(stack_b->head))
             queue_rr(stack_a, stack_b);
-        if (peek_is_max(stack_b->head) && queue_is_sorted(stack_a,0))
+        if (peek_is_max(stack_b->head) && queue_is_sorted(stack_a, 0))
             queue_push(stack_b, stack_a, 1);
     }
 }
@@ -181,35 +181,87 @@ void find_medium(Queue *stack_a, Queue *stack_b)
         queue_rotate(stack_a, 0);
 }
 
-void pivot_stack(Queue *stack_a, Queue *stack_b, int stack_size, int med)
+void pivot_stack(Queue *source, Queue *dest)
 {
     int pos = 0;
-    while(pos < stack_size)
+    int med = (source->max + source->min) / 2;
+    int size = source->size;
+    printf("med:%d\n", med);
+    while (pos < size)
     {
-        if ( stack_a->head->value < med)
-            queue_push(stack_a, stack_b,0);
+        // printf("pos:%d %d\n", pos, size);
+        if (dest->size > 1 && !queue_is_sorted(dest, 1))
+        {
+            if (get_peak(dest) < get_next_peak(dest) &&
+                get_peak(source) > med)
+                queue_rr(source, dest);
+            if (get_peak(dest) < get_next_peak(dest) &&
+                get_peak(source) > get_next_peak(source) && !peek_is_min(dest->head))
+                queue_ss(source, dest);
+            else
+                queue_rotate(dest, 1);
+        }
+        if (source->head->value < med)
+            queue_push(source, dest, 0);
         else
-            queue_rotate(stack_a,0);
+            queue_rotate(source, 0);
+        pos++;
+    }
+    if (source->size == 3)
+        sort_three_items(source);
+    while (peek_is_max(dest->head))
+    {
+        queue_push(dest, source, 1);
+    }
+}
+
+void pivot_stack_b(Queue *stack_a, Queue *stack_b, int stack_size, int med)
+{
+    int pos = 0;
+    while (pos < stack_size)
+    {
+        if (stack_b->head->value > med)
+        {
+            queue_push(stack_b, stack_a, 1);
+        }
+
+        else
+            queue_rotate(stack_b, 1);
         pos++;
     }
 }
 
-void sort_stack(Queue *stack_a, Queue *stack_b, int med)
+int lower_than_medium(Node *node, int med)
 {
-    printf("med:%d\n",med);
-    
-    pivot_stack(stack_a, stack_b, stack_a->size, med);
-    move_simu(stack_a, stack_b);
-    //update_position(stack_a);
-   if ( !queue_is_sorted(stack_a,0))
-   {
-        int border = stack_b->head;
-        int newmed = med + stack_a
-        pivot_stack(stack_a, stack_b, stack_a->size, )
-   }
+    if (node->value < med)
+        return 1;
+    return 0;
+}
+int greater_than_medium(Node *node, int med)
+{
+    if (node->value > med)
+        return 1;
+    return 0;
+}
 
+void sort_stack(Queue *stack_a, Queue *stack_b)
+{
 
+    pivot_stack(stack_a, stack_b);
 
+    // move_simu(stack_a, stack_b);
+    //  update_position(stack_a);
+    /*if (!queue_is_sorted(stack_a, 0))
+    {
+        if (get_peak(stack_a) > get_next_peak(stack_a) && get_peak(stack_b) < get_next_peak(stack_b))
+            queue_ss(stack_a, stack_b);
+        if (!is_tail_max(stack_a->tail) && !is_tail_min(stack_b->tail))
+            queue_rrr(stack_a, stack_b);
+    }*/
+    // int border = stack_b->head->value;
+    // pivot_stack(stack_a, stack_b, stack_a->size, med + med / 2);
+    // sort_five(stack_a, stack_b, med + med / 2);
+    //  pivot_stack_b(stack_b, stack_a, stack_b->size, med - med / 2);
 }
 
 void run_algo(Queue *stack_a, Queue *stack_b, int median)
@@ -230,8 +282,7 @@ void run_algo(Queue *stack_a, Queue *stack_b, int median)
         else
         {
 
-            sort_stack(stack_a,stack_b, median);
-            
+            sort_stack(stack_a, stack_b);
         }
     } // run_algo(stack_a, stack_b, median);
 }
@@ -260,6 +311,8 @@ int check_duplicate(char **str, int input_len)
                 minValue = item;
             if (check_item_queue(queue_A, item) == 0)
                 enqueue(queue_A, item);
+            queue_A->max = maxValue;
+            queue_A->min = minValue;
         }
         else
             return (0);

@@ -23,6 +23,13 @@ int get_peak(Queue *stack)
     return stack->head->value;
 }
 
+int get_next_peak(Queue *stack)
+{
+    if (queue_is_empty(stack))
+        return (0);
+    return stack->head->next->value;
+}
+
 int queue_is_sorted(Queue *stack, int reverse)
 {
     if (queue_is_empty(stack))
@@ -113,8 +120,9 @@ int is_tail_max(Node *node)
     tailNode = node;
 
     Node *currentNode = node->prev;
-    while (currentNode)
+    while (currentNode->value != 0)
     {
+        // printf("%d %d\n", tailNode->value, currentNode->value);
         if (tailNode->value < currentNode->value)
             return (0);
         currentNode = currentNode->prev;
