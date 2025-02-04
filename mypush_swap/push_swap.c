@@ -187,7 +187,7 @@ void pivot_stack(Queue *source, Queue *dest)
     int med = (source->max + source->min) / 2;
     int size = source->size;
     printf("med:%d\n", med);
-    while (pos < size)
+    while (pos < size && source->size > 1)
     {
         // printf("pos:%d %d\n", pos, size);
         if (dest->size > 1 && !queue_is_sorted(dest, 1))
@@ -209,10 +209,10 @@ void pivot_stack(Queue *source, Queue *dest)
     }
     if (source->size == 3)
         sort_three_items(source);
-    while (peek_is_max(dest->head))
+    /*while (peek_is_max(dest->head))
     {
         queue_push(dest, source, 1);
-    }
+    }*/
 }
 
 void pivot_stack_b(Queue *stack_a, Queue *stack_b, int stack_size, int med)
